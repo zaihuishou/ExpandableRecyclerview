@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="@android:color/holo_green_dark"
+                android:background="@drawable/ripple_my_item"
                 android:orientation="vertical"
                 android:paddingLeft="26dp"
                 android:paddingRight="16dp">
 
     <TextView
         android:id="@+id/tv_name"
+        android:textColor="#1b2359"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"

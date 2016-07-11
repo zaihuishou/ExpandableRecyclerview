@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         });
         List companyList = new ArrayList<>();
 
-        companyList.add(creaateCompany("天上人间"));
+        companyList.add(creaateCompany("Google"));
 
-        companyList.add(creaateCompany("地狱之火"));
+        companyList.add(creaateCompany("Apple"));
         mBaseRcvAdapter = new BaseExpandableAdapter(companyList) {
             @NonNull
             @Override
@@ -82,12 +82,12 @@ public class MainActivity extends AppCompatActivity {
         List<Department> departments = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             Department department = new Department();
-            department.name = "一级子部门:" + i;
+            department.name = " sub-department:" + i;
             if (i == 0) {
                 List<Employee> employeeList = new ArrayList<>();
                 for (int j = 0; j < 4; j++) {
                     Employee employee = new Employee();
-                    employee.name = "员工:" + j;
+                    employee.name = "employee:" + j;
                     employeeList.add(employee);
                 }
                 department.mEmployees = employeeList;

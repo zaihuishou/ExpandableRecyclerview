@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="50dp"
-              android:background="@android:color/holo_purple"
+              android:background="@drawable/ripple_my_item"
               android:gravity="center_vertical"
               android:orientation="vertical"
-              android:paddingLeft="36dp">
+              android:paddingLeft="40dp">
 
     <TextView
         android:id="@+id/tv_name"
