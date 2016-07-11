@@ -16,7 +16,7 @@ import com.zaihuishou.expandablerecycleradapter.ViewHolder.AdapterItemUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseRcvAdapter extends RecyclerView.Adapter implements ParentListItemExpandCollapseListener {
+public abstract class BaseExpandableAdapter extends RecyclerView.Adapter implements ParentListItemExpandCollapseListener {
 
     protected List<Object> mDataList;
 
@@ -32,10 +32,10 @@ public abstract class BaseRcvAdapter extends RecyclerView.Adapter implements Par
         mExpandCollapseListener = expandCollapseListener;
     }
 
-    protected BaseRcvAdapter(List data) {
+    protected BaseExpandableAdapter(List data) {
         if (data == null) return;
         this.mDataList = data;
-        Log.i("BaseRcvAdapter", "data size:" + mDataList.size());
+        Log.i("BaseExpandableAdapter", "data size:" + mDataList.size());
         mAttachedRecyclerViewPool = new ArrayList<>();
     }
 
@@ -75,7 +75,7 @@ public abstract class BaseRcvAdapter extends RecyclerView.Adapter implements Par
 
     @Override
     public void onParentListItemCollapsed(int position) {
-        Log.i("BaseRcvAdapter", "onParentListItemCollapsed position:" + position);
+        Log.i("BaseExpandableAdapter", "onParentListItemCollapsed position:" + position);
         Object o = mDataList.get(position);
         if (o instanceof ParentListItem) {
             collapseParentListItem((ParentListItem) o, position, true);
@@ -89,7 +89,7 @@ public abstract class BaseRcvAdapter extends RecyclerView.Adapter implements Par
      */
     @Override
     public void onParentListItemExpanded(int position) {
-        Log.i("BaseRcvAdapter", "onParentListItemExpanded position:" + position);
+        Log.i("BaseExpandableAdapter", "onParentListItemExpanded position:" + position);
         Object o = mDataList.get(position);
         if (o instanceof ParentListItem) {
             expandParentListItem((ParentListItem) o, position, true);
@@ -104,7 +104,14 @@ public abstract class BaseRcvAdapter extends RecyclerView.Adapter implements Par
             if (childItemList != null) {
                 int childListItemCount = childItemList.size();
                 for (int i = childListItemCount - 1; i >= 0; i--) {
-                    mDataList.remove(parentIndex + i + 1);
+                    int index = parentIndex + i + 1;
+                    Object o = mDataList.get(index);
+                    if (o instanceof ParentListItem) {
+                        ParentListItem parentListItem = (ParentListItem) o;
+                        if (parentListItem.isExpanded())
+                            collapseParentListItem(parentListItem, index, false);
+                    }
+                    mDataList.remove(index);
                 }
                 notifyItemRangeRemoved(parentIndex + 1, childListItemCount);
                 notifyItemRangeChanged(parentIndex + 1, mDataList.size() - parentIndex - 1);
@@ -119,9 +126,9 @@ public abstract class BaseRcvAdapter extends RecyclerView.Adapter implements Par
 
     private void expandParentListItem(ParentListItem parentWrapper, int parentIndex, boolean expansionTriggeredByListItemClick) {
         if (!parentWrapper.isExpanded()) {
-            parentWrapper.setExpanded(true);
             List<?> childItemList = parentWrapper.getChildItemList();
             if (childItemList != null && !childItemList.isEmpty()) {
+                parentWrapper.setExpanded(true);
                 int childListItemCount = childItemList.size();
                 for (int i = 0; i < childListItemCount; i++) {
                     mDataList.add(parentIndex + i + 1, childItemList.get(i));
@@ -212,21 +219,18 @@ public abstract class BaseRcvAdapter extends RecyclerView.Adapter implements Par
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        Log.i("BaseRcvAdapter", "onCreateViewHolder viewType:" + viewType);
+//        Log.i("BaseExpandableAdapter", "onCreateViewHolder viewType:" + viewType);
         return new RcvAdapterItem(parent.getContext(), parent, getItemView(mItemType));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//        Log.i("BaseRcvAdapter", "onBindViewHolder position:" + position);
+//        Log.i("BaseExpandableAdapter", "onBindViewHolder position:" + position);
         RcvAdapterItem rcvHolder = (RcvAdapterItem) holder;
         Object object = mDataList.get(position);
         if (object instanceof ParentListItem) {
-            AbstractAdapterItem<Object> item = rcvHolder.getItem();
-            if (item instanceof AbstractParentAdapterItem) {
-                AbstractParentAdapterItem abstractParentAdapterItem = (AbstractParentAdapterItem) item;
-                abstractParentAdapterItem.setParentListItemExpandCollapseListener(this);
-            }
+            AbstractParentAdapterItem abstractParentAdapterItem = (AbstractParentAdapterItem) rcvHolder.getItem();
+            abstractParentAdapterItem.setParentListItemExpandCollapseListener(this);
         }
         (rcvHolder).getItem().onUpdateViews(mDataList.get(position), position);
     }

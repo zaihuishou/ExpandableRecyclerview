@@ -14,6 +14,7 @@ import com.zaihuishou.expandablerecycleradapter.Model.ParentListItem;
  * @since 5/27/2015
  */
 public abstract class AbstractParentAdapterItem extends AbstractAdapterItem implements View.OnClickListener {
+
     private int itemIndex = -1;
     private ParentListItemExpandCollapseListener mParentListItemExpandCollapseListener;
     private ParentListItem mParentListItem;
@@ -23,6 +24,11 @@ public abstract class AbstractParentAdapterItem extends AbstractAdapterItem impl
         this.itemIndex = position;
         if (model instanceof ParentListItem)
             mParentListItem = (ParentListItem) model;
+    }
+
+    @Override
+    public void onBindViews(View root) {
+        root.setOnClickListener(this);
     }
 
     /**
@@ -87,10 +93,12 @@ public abstract class AbstractParentAdapterItem extends AbstractAdapterItem impl
      */
     @Override
     public void onClick(View v) {
-        if (mParentListItem.isExpanded()) {
-            collapseView();
-        } else {
-            expandView();
+        if (mParentListItem != null) {
+            if (mParentListItem.isExpanded()) {
+                collapseView();
+            } else {
+                expandView();
+            }
         }
     }
 

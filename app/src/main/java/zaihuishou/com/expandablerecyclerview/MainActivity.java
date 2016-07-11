@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.zaihuishou.expandablerecycleradapter.Adapter.BaseRcvAdapter;
+import com.zaihuishou.expandablerecycleradapter.Adapter.BaseExpandableAdapter;
 import com.zaihuishou.expandablerecycleradapter.ViewHolder.AbstractAdapterItem;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
-    private BaseRcvAdapter mBaseRcvAdapter;
+    private BaseExpandableAdapter mBaseRcvAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,23 +42,19 @@ public class MainActivity extends AppCompatActivity {
 
         companyList.add(creaateCompany("天上人间"));
 
-        Department department = new Department();
-        department.name = "测试部门:";
-        companyList.add(department);
-
         companyList.add(creaateCompany("地狱之火"));
-        mBaseRcvAdapter = new BaseRcvAdapter(companyList) {
+        mBaseRcvAdapter = new BaseExpandableAdapter(companyList) {
             @NonNull
             @Override
             public AbstractAdapterItem<Object> getItemView(Object type) {
                 int type1 = (int) type;
                 switch (type1) {
                     case 1:
-                        CompanyItem companyItem = new CompanyItem();
-//                        companyItem.setExpanded(true);
-                        return companyItem;
+                        return new CompanyItem();
                     case 2:
                         return new DepartmentItem();
+                    case 3:
+                        return new EmployeeItem();
                 }
                 return null;
             }
@@ -69,7 +65,9 @@ public class MainActivity extends AppCompatActivity {
                     return 1;
                 } else if (t instanceof Department)
                     return 2;
-                else return 3;
+                else if (t instanceof Employee)
+                    return 3;
+                return 0;
             }
         };
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -85,6 +83,15 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 5; i++) {
             Department department = new Department();
             department.name = "一级子部门:" + i;
+            if (i == 0) {
+                List<Employee> employeeList = new ArrayList<>();
+                for (int j = 0; j < 4; j++) {
+                    Employee employee = new Employee();
+                    employee.name = "员工:" + j;
+                    employeeList.add(employee);
+                }
+                department.mEmployees = employeeList;
+            }
             departments.add(department);
         }
         firstCompany.mDepartments = departments;
