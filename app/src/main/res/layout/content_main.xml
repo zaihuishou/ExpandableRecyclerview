@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.v7.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="50dp"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content_main"
+    android:id="@+id/rcv"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="zaihuishou.com.expandablerecyclerview.MainActivity"
-    tools:showIn="@layout/activity_main">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rcv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-</android.support.constraint.ConstraintLayout>
+    android:layout_height="match_parent"/>

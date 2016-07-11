@@ -2,6 +2,8 @@ package com.zaihuishou.expandablerecycleradapter.ViewHolder;
 
 import android.view.View;
 
+import com.zaihuishou.expandablerecycleradapter.Model.ParentListItem;
+
 
 /**
  * Keeps track of expanded state and holds callbacks which can be used to
@@ -14,11 +16,13 @@ import android.view.View;
 public abstract class AbstractParentAdapterItem extends AbstractAdapterItem implements View.OnClickListener {
     private int itemIndex = -1;
     private ParentListItemExpandCollapseListener mParentListItemExpandCollapseListener;
-    private boolean mExpanded;
+    private ParentListItem mParentListItem;
 
     @Override
     public void onUpdateViews(java.lang.Object model, int position) {
         this.itemIndex = position;
+        if (model instanceof ParentListItem)
+            mParentListItem = (ParentListItem) model;
     }
 
     /**
@@ -40,25 +44,6 @@ public abstract class AbstractParentAdapterItem extends AbstractAdapterItem impl
          */
         void onParentListItemCollapsed(int position);
 
-    }
-
-    /**
-     * corresponding to this {@link AbstractParentAdapterItem}.
-     *
-     * @return true if expanded, false if not
-     */
-    public boolean isExpanded() {
-        return mExpanded;
-    }
-
-    /**
-     * Setter method for expanded state, used for initialization of expanded state.
-     * changes to the state are given in {@link #onExpansionToggled(boolean)}
-     *
-     * @param expanded true if expanded, false if not
-     */
-    public void setExpanded(boolean expanded) {
-        mExpanded = expanded;
     }
 
     /**
@@ -102,7 +87,7 @@ public abstract class AbstractParentAdapterItem extends AbstractAdapterItem impl
      */
     @Override
     public void onClick(View v) {
-        if (mExpanded) {
+        if (mParentListItem.isExpanded()) {
             collapseView();
         } else {
             expandView();
@@ -127,7 +112,6 @@ public abstract class AbstractParentAdapterItem extends AbstractAdapterItem impl
      * Triggers expansion of the parent.
      */
     protected void expandView() {
-        setExpanded(true);
         onExpansionToggled(false);
         if (mParentListItemExpandCollapseListener != null) {
             mParentListItemExpandCollapseListener.onParentListItemExpanded(itemIndex);
@@ -138,9 +122,7 @@ public abstract class AbstractParentAdapterItem extends AbstractAdapterItem impl
      * Triggers collapse of the parent.
      */
     protected void collapseView() {
-        setExpanded(false);
         onExpansionToggled(true);
-
         if (mParentListItemExpandCollapseListener != null) {
             mParentListItemExpandCollapseListener.onParentListItemCollapsed(itemIndex);
         }

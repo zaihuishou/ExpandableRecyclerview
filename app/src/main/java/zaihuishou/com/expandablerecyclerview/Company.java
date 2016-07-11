@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 public class Company implements ParentListItem {
-
+    public boolean mExpanded = false;
     public String name;
     public List<Department> mDepartments;
 
@@ -24,5 +24,22 @@ public class Company implements ParentListItem {
     @Override
     public boolean isInitiallyExpanded() {
         return false;
+    }
+
+    @Override
+    public boolean isExpanded() {
+        return mExpanded;
+    }
+
+    @Override
+    public void setExpanded(boolean isExpanded) {
+        mExpanded = isExpanded;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

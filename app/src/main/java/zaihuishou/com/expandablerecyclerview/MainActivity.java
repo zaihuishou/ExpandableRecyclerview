@@ -38,10 +38,15 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        List<Company> companyList = new ArrayList<>();
-        Company company = new Company();
-        company.name = "测试公司:" + 0;
-        companyList.add(company);
+        List companyList = new ArrayList<>();
+
+        companyList.add(creaateCompany("天上人间"));
+
+        Department department = new Department();
+        department.name = "测试部门:";
+        companyList.add(department);
+
+        companyList.add(creaateCompany("地狱之火"));
         mBaseRcvAdapter = new BaseRcvAdapter(companyList) {
             @NonNull
             @Override
@@ -52,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
                         CompanyItem companyItem = new CompanyItem();
 //                        companyItem.setExpanded(true);
                         return companyItem;
+                    case 2:
+                        return new DepartmentItem();
                 }
                 return null;
             }
@@ -60,14 +67,28 @@ public class MainActivity extends AppCompatActivity {
             public Object getItemViewType(Object t) {
                 if (t instanceof Company) {
                     return 1;
-                }
-                if (t instanceof Department)
+                } else if (t instanceof Department)
                     return 2;
                 else return 3;
             }
         };
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mBaseRcvAdapter);
+    }
+
+    @NonNull
+    private Company creaateCompany(String companyName) {
+        Company firstCompany = new Company();
+        firstCompany.name = companyName;
+
+        List<Department> departments = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            Department department = new Department();
+            department.name = "一级子部门:" + i;
+            departments.add(department);
+        }
+        firstCompany.mDepartments = departments;
+        return firstCompany;
     }
 
     @Override

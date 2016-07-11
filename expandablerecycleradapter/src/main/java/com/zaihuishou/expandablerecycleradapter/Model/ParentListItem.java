@@ -23,4 +23,8 @@ public interface ParentListItem {
      * @return true if expanded, false if not
      */
     boolean isInitiallyExpanded();
+
+    boolean isExpanded();
+
+    void setExpanded(boolean isExpanded);
 }
