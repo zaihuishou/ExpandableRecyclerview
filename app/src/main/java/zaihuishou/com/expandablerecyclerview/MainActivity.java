@@ -102,12 +102,12 @@ public class MainActivity extends AppCompatActivity {
         List<Department> departments = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             Department department = new Department();
-            department.name = " sub-department:" + i;
+            department.name = "Department:" + i;
             if (i == 0) {
                 List<Employee> employeeList = new ArrayList<>();
                 for (int j = 0; j < 4; j++) {
                     Employee employee = new Employee();
-                    employee.name = "employee:" + j;
+                    employee.name = "Employee:" + j;
                     employeeList.add(employee);
                 }
                 department.mEmployees = employeeList;
