@@ -3,6 +3,7 @@ package zaihuishou.com.expandablerecyclerview;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final int ITEM_TYPE_COMPANY = 1;
+    private final int ITEM_TYPE_DEPARTMENT = 2;
+    private final int ITEM_TYPE_EMPLOYEE = 3;
+
     private RecyclerView mRecyclerView;
     private BaseExpandableAdapter mBaseRcvAdapter;
     private List mCompanylist;
@@ -31,20 +36,24 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mRecyclerView = (RecyclerView) findViewById(R.id.rcv);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (mRecyclerView != null) {
-                    Department department = new Department();
                     if (!hasAdd) {
+                        Department department = new Department();
                         department.name = "Add a department";
                         mBaseRcvAdapter.addItem(department);
                         hasAdd = true;
+                        fab.setImageResource(android.R.drawable.ic_delete);
+                        Snackbar.make(view,"add item",Snackbar.LENGTH_SHORT).show();
                     } else {
-                        department.name = "change department";
-                        mBaseRcvAdapter.modifyItem(mBaseRcvAdapter.getItemCount() - 1,department);
+                        mBaseRcvAdapter.removedItem(mBaseRcvAdapter.getItemCount() - 1);
+                        hasAdd = false;
+                        fab.setImageResource(android.R.drawable.ic_input_add);
+                        Snackbar.make(view,"delete item",Snackbar.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -60,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
             public AbstractAdapterItem<Object> getItemView(Object type) {
                 int type1 = (int) type;
                 switch (type1) {
-                    case 1:
+                    case ITEM_TYPE_COMPANY:
                         return new CompanyItem();
-                    case 2:
+                    case ITEM_TYPE_DEPARTMENT:
                         return new DepartmentItem();
-                    case 3:
+                    case ITEM_TYPE_EMPLOYEE:
                         return new EmployeeItem();
                 }
                 return null;
@@ -73,11 +82,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public Object getItemViewType(Object t) {
                 if (t instanceof Company) {
-                    return 1;
+                    return ITEM_TYPE_COMPANY;
                 } else if (t instanceof Department)
-                    return 2;
+                    return ITEM_TYPE_DEPARTMENT;
                 else if (t instanceof Employee)
-                    return 3;
+                    return ITEM_TYPE_EMPLOYEE;
                 return 0;
             }
         };

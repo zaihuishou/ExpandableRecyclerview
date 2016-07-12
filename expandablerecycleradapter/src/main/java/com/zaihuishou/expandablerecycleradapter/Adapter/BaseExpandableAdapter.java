@@ -155,12 +155,14 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
                     Object o = mDataList.get(index);
                     if (o instanceof ParentListItem) {
                         ParentListItem parentListItem = (ParentListItem) o;
-                        if (parentListItem.isExpanded())
+                        if (parentListItem.isExpanded()) {
                             collapseParentListItem(parentListItem, index, false);
+                        }
                     }
                     mDataList.remove(index);
                 }
                 notifyItemRangeRemoved(parentIndex + 1, childListItemCount);
+                parentWrapper.setExpanded(false);
                 notifyItemRangeChanged(parentIndex + 1, mDataList.size() - parentIndex - 1);
             }
 

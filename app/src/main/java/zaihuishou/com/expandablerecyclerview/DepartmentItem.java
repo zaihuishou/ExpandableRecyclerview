@@ -1,5 +1,6 @@
 package zaihuishou.com.expandablerecyclerview;
 
+import android.animation.ObjectAnimator;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +20,7 @@ import java.util.List;
 public class DepartmentItem extends AbstractParentAdapterItem {
 
     private TextView mName;
-    private ImageView mChild;
+    private ImageView mArrow;
 
     @Override
     public int getLayoutResId() {
@@ -30,17 +31,27 @@ public class DepartmentItem extends AbstractParentAdapterItem {
     public void onBindViews(View root) {
         super.onBindViews(root);
         mName = (TextView) root.findViewById(R.id.tv_name);
-        mChild = (ImageView) root.findViewById(R.id.iv_child);
+        mArrow = (ImageView) root.findViewById(R.id.iv_arrow);
     }
 
     @Override
     public void onExpansionToggled(boolean expanded) {
-
+        float start, target;
+        if (expanded) {
+            start = 0f;
+            target = 90f;
+        } else {
+            start = 90f;
+            target = 0f;
+        }
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(mArrow, View.ROTATION, start, target);
+        objectAnimator.setDuration(300);
+        objectAnimator.start();
     }
 
     @Override
     public void onSetViews() {
-        mChild.setVisibility(View.GONE);
+        mArrow.setVisibility(View.GONE);
     }
 
     @Override
@@ -52,6 +63,6 @@ public class DepartmentItem extends AbstractParentAdapterItem {
         ParentListItem parentListItem = (ParentListItem) model;
         List<?> childItemList = parentListItem.getChildItemList();
         if (childItemList != null && !childItemList.isEmpty())
-            mChild.setVisibility(View.VISIBLE);
+            mArrow.setVisibility(View.VISIBLE);
     }
 }

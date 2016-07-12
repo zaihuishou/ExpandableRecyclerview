@@ -26,6 +26,10 @@ public abstract class AbstractParentAdapterItem extends AbstractAdapterItem impl
             mParentListItem = (ParentListItem) model;
     }
 
+    public ParentListItem getParentListItem() {
+        return mParentListItem;
+    }
+
     @Override
     public void onBindViews(View root) {
         root.setOnClickListener(this);
@@ -118,7 +122,7 @@ public abstract class AbstractParentAdapterItem extends AbstractAdapterItem impl
      * Triggers expansion of the parent.
      */
     protected void expandView() {
-        onExpansionToggled(false);
+        onExpansionToggled(true);
         if (mParentListItemExpandCollapseListener != null) {
             mParentListItemExpandCollapseListener.onParentListItemExpanded(itemIndex);
         }
@@ -128,7 +132,7 @@ public abstract class AbstractParentAdapterItem extends AbstractAdapterItem impl
      * Triggers collapse of the parent.
      */
     protected void collapseView() {
-        onExpansionToggled(true);
+        onExpansionToggled(false);
         if (mParentListItemExpandCollapseListener != null) {
             mParentListItemExpandCollapseListener.onParentListItemCollapsed(itemIndex);
         }

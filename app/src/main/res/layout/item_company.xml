@@ -17,9 +17,10 @@
         />
 
     <ImageView
+        android:id="@+id/iv_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@android:drawable/ic_menu_share"/>
+        android:src="@mipmap/arrow_down"/>
 </RelativeLayout>
