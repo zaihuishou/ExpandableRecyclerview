@@ -3,7 +3,6 @@ package zaihuishou.com.expandablerecyclerview;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private BaseExpandableAdapter mBaseRcvAdapter;
+    private List mCompanylist;
+    private boolean hasAdd = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +35,26 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                if (mRecyclerView != null) {
+                    Department department = new Department();
+                    if (!hasAdd) {
+                        department.name = "Add a department";
+                        mBaseRcvAdapter.addItem(department);
+                        hasAdd = true;
+                    } else {
+                        department.name = "change department";
+                        mBaseRcvAdapter.modifyItem(mBaseRcvAdapter.getItemCount() - 1,department);
+                    }
+                }
             }
         });
-        List companyList = new ArrayList<>();
+        mCompanylist = new ArrayList<>();
 
-        companyList.add(creaateCompany("Google"));
+        mCompanylist.add(creaateCompany("Google"));
 
-        companyList.add(creaateCompany("Apple"));
-        mBaseRcvAdapter = new BaseExpandableAdapter(companyList) {
+        mCompanylist.add(creaateCompany("Apple"));
+        mBaseRcvAdapter = new BaseExpandableAdapter(mCompanylist) {
             @NonNull
             @Override
             public AbstractAdapterItem<Object> getItemView(Object type) {

@@ -61,9 +61,7 @@ public abstract class AbstractParentAdapterItem extends AbstractAdapterItem impl
      * @param expanded true if view is expanded before expansion is toggled,
      *                 false if not
      */
-    public void onExpansionToggled(boolean expanded) {
-
-    }
+    public abstract void onExpansionToggled(boolean expanded);
 
     /**
      * Getter for the {@link ParentListItemExpandCollapseListener} implemented in

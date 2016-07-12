@@ -3,7 +3,6 @@ package com.zaihuishou.expandablerecycleradapter.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -35,7 +34,6 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
     protected BaseExpandableAdapter(List data) {
         if (data == null) return;
         this.mDataList = data;
-        Log.i("BaseExpandableAdapter", "data size:" + mDataList.size());
         mAttachedRecyclerViewPool = new ArrayList<>();
     }
 
@@ -56,26 +54,76 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
         notifyDataSetChanged();
     }
 
-    public void add(int position, Object t) {
-        mDataList.add(position, t);
-        notifyItemInserted(position);
-    }
-
-    public void add(int position, List<Object> ts) {
-        mDataList.addAll(position, ts);
-        notifyItemRangeInserted(position, position + ts.size());
-    }
-
-    public void remove(int position) {
-        if (position < mDataList.size()) {
-            mDataList.remove(position);
+    /**
+     * add an item
+     *
+     * @param position intem index
+     * @param t
+     */
+    public void addItem(int position, Object t) {
+        if (isDataListNotEmpty() && position >= 0) {
+            mDataList.add(position, t);
+            notifyItemInserted(position);
         }
-        notifyItemRemoved(position);
     }
+
+    /**
+     * add an item
+     * @param o
+     */
+    public void addItem(Object o) {
+        if (isDataListNotEmpty()) {
+            mDataList.add(o);
+            int size = mDataList.size();
+            notifyItemInserted(size - 1);
+        }
+    }
+
+    /**
+     * add items
+     *
+     * @param position
+     * @param objects
+     */
+    public void addRangeItem(int position, List<Object> objects) {
+        if (isDataListNotEmpty() && position <= mDataList.size() && position >= 0) {
+            mDataList.addAll(position, objects);
+            notifyItemRangeInserted(position, position + objects.size());
+        }
+    }
+
+    /**
+     * modify an exit item
+     * @param position
+     * @param newObj
+     */
+    public void modifyItem(int position,Object newObj){
+        if (isDataListNotEmpty() && position < mDataList.size() && position >= 0) {
+            mDataList.set(position,newObj);
+            notifyItemChanged(position);
+        }
+    }
+
+    /**
+     * remove item
+     *
+     * @param position
+     */
+    public void removedItem(int position) {
+        if (isDataListNotEmpty() && position < mDataList.size() && position >= 0) {
+            mDataList.remove(position);
+            notifyItemRemoved(position);
+        }
+
+    }
+
+    private boolean isDataListNotEmpty() {
+        return mDataList != null && !mDataList.isEmpty();
+    }
+
 
     @Override
     public void onParentListItemCollapsed(int position) {
-        Log.i("BaseExpandableAdapter", "onParentListItemCollapsed position:" + position);
         Object o = mDataList.get(position);
         if (o instanceof ParentListItem) {
             collapseParentListItem((ParentListItem) o, position, true);
@@ -89,7 +137,6 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
      */
     @Override
     public void onParentListItemExpanded(int position) {
-        Log.i("BaseExpandableAdapter", "onParentListItemExpanded position:" + position);
         Object o = mDataList.get(position);
         if (o instanceof ParentListItem) {
             expandParentListItem((ParentListItem) o, position, true);
@@ -219,13 +266,11 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        Log.i("BaseExpandableAdapter", "onCreateViewHolder viewType:" + viewType);
         return new RcvAdapterItem(parent.getContext(), parent, getItemView(mItemType));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//        Log.i("BaseExpandableAdapter", "onBindViewHolder position:" + position);
         RcvAdapterItem rcvHolder = (RcvAdapterItem) holder;
         Object object = mDataList.get(position);
         if (object instanceof ParentListItem) {

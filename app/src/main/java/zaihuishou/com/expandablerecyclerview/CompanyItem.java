@@ -29,6 +29,11 @@ public class CompanyItem extends AbstractParentAdapterItem {
     }
 
     @Override
+    public void onExpansionToggled(boolean expanded) {
+
+    }
+
+    @Override
     public void onSetViews() {
 
     }

@@ -23,11 +23,6 @@ public class Department implements ParentListItem {
     }
 
     @Override
-    public boolean isInitiallyExpanded() {
-        return false;
-    }
-
-    @Override
     public boolean isExpanded() {
         return mExpand;
     }

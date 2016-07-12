@@ -34,6 +34,11 @@ public class DepartmentItem extends AbstractParentAdapterItem {
     }
 
     @Override
+    public void onExpansionToggled(boolean expanded) {
+
+    }
+
+    @Override
     public void onSetViews() {
         mChild.setVisibility(View.GONE);
     }
