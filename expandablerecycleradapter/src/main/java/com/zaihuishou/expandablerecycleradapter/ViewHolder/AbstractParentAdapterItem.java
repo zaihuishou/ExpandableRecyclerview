@@ -1,8 +1,8 @@
-package com.zaihuishou.expandablerecycleradapter.ViewHolder;
+package com.zaihuishou.expandablerecycleradapter.viewholder;
 
 import android.view.View;
 
-import com.zaihuishou.expandablerecycleradapter.Model.ParentListItem;
+import com.zaihuishou.expandablerecycleradapter.model.ParentListItem;
 
 
 /**

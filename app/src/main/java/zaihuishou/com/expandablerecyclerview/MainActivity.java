@@ -1,7 +1,9 @@
 package zaihuishou.com.expandablerecyclerview;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,11 +14,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.zaihuishou.expandablerecycleradapter.Adapter.BaseExpandableAdapter;
-import com.zaihuishou.expandablerecycleradapter.ViewHolder.AbstractAdapterItem;
+import com.zaihuishou.expandablerecycleradapter.adapter.BaseExpandableAdapter;
+import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractAdapterItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.zaihuishou.expandablerecycleradapter.divider.DividerItemDecoration;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private List mCompanylist;
     private boolean hasAdd = false;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         };
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mBaseRcvAdapter);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.line_bg,null),50,0,3));
     }
 
     @NonNull

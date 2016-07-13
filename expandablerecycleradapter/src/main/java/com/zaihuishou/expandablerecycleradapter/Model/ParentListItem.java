@@ -1,4 +1,4 @@
-package com.zaihuishou.expandablerecycleradapter.Model;
+package com.zaihuishou.expandablerecycleradapter.model;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.zaihuishou.expandablerecycleradapter.ViewHolder;
+package com.zaihuishou.expandablerecycleradapter.viewholder;
 
 import android.util.SparseArray;
 

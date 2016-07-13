@@ -1,16 +1,15 @@
-package com.zaihuishou.expandablerecycleradapter.Adapter;
+package com.zaihuishou.expandablerecycleradapter.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.zaihuishou.expandablerecycleradapter.Model.ParentListItem;
-import com.zaihuishou.expandablerecycleradapter.ViewHolder.AbstractAdapterItem;
-import com.zaihuishou.expandablerecycleradapter.ViewHolder.AbstractParentAdapterItem;
-import com.zaihuishou.expandablerecycleradapter.ViewHolder.AbstractParentAdapterItem.ParentListItemExpandCollapseListener;
-import com.zaihuishou.expandablerecycleradapter.ViewHolder.AdapterItemUtil;
+import com.zaihuishou.expandablerecycleradapter.model.ParentListItem;
+import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractAdapterItem;
+import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractParentAdapterItem;
+import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractParentAdapterItem.ParentListItemExpandCollapseListener;
+import com.zaihuishou.expandablerecycleradapter.viewholder.AdapterItemUtil;
+import com.zaihuishou.expandablerecycleradapter.viewholder.RcvAdapterItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -289,24 +288,24 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
         (rcvHolder).getItem().onUpdateViews(mDataList.get(position), position);
     }
 
-
-    private class RcvAdapterItem extends RecyclerView.ViewHolder {
-
-        protected AbstractAdapterItem<Object> mItem;
-
-        protected RcvAdapterItem(Context context, ViewGroup parent, AbstractAdapterItem<Object> item) {
-            super(LayoutInflater.from(context).inflate(item.getLayoutResId(), parent, false));
-            itemView.setClickable(true);
-            mItem = item;
-            mItem.onBindViews(itemView);
-            mItem.onSetViews();
-        }
-
-        protected AbstractAdapterItem<Object> getItem() {
-            return mItem;
-        }
-
-    }
+//
+//    private class RcvAdapterItem extends RecyclerView.ViewHolder {
+//
+//        protected AbstractAdapterItem<Object> mItem;
+//
+//        protected RcvAdapterItem(Context context, ViewGroup parent, AbstractAdapterItem<Object> item) {
+//            super(LayoutInflater.from(context).inflate(item.getLayoutResId(), parent, false));
+//            itemView.setClickable(true);
+//            mItem = item;
+//            mItem.onBindViews(itemView);
+//            mItem.onSetViews();
+//        }
+//
+//        protected AbstractAdapterItem<Object> getItem() {
+//            return mItem;
+//        }
+//
+//    }
 
     public interface ExpandCollapseListener {
 

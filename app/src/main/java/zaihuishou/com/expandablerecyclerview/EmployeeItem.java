@@ -3,7 +3,7 @@ package zaihuishou.com.expandablerecyclerview;
 import android.view.View;
 import android.widget.TextView;
 
-import com.zaihuishou.expandablerecycleradapter.ViewHolder.AbstractAdapterItem;
+import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractAdapterItem;
 
 /**
  * 创建者: zhiqiang(谭志强)

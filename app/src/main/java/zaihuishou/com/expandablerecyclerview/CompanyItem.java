@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zaihuishou.expandablerecycleradapter.ViewHolder.AbstractParentAdapterItem;
+import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractParentAdapterItem;
 
 /**
  * 创建者: zhiqiang(谭志强)

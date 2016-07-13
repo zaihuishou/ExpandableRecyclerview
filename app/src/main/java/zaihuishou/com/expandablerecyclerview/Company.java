@@ -1,6 +1,6 @@
 package zaihuishou.com.expandablerecyclerview;
 
-import com.zaihuishou.expandablerecycleradapter.Model.ParentListItem;
+import com.zaihuishou.expandablerecycleradapter.model.ParentListItem;
 
 import java.util.List;
 
