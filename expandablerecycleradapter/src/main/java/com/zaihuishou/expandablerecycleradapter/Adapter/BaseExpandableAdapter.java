@@ -48,6 +48,8 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
 
     /**
      * 可以被复写用于单条刷新等
+     *
+     * @param data items
      */
     public void updateData(@NonNull List<Object> data) {
         mDataList = data;
@@ -58,18 +60,19 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
      * add an item
      *
      * @param position intem index
-     * @param t
+     * @param o        item
      */
-    public void addItem(int position, Object t) {
+    public void addItem(int position, Object o) {
         if (isDataListNotEmpty() && position >= 0) {
-            mDataList.add(position, t);
+            mDataList.add(position, o);
             notifyItemInserted(position);
         }
     }
 
     /**
      * add an item
-     * @param o
+     *
+     * @param o item object
      */
     public void addItem(Object o) {
         if (isDataListNotEmpty()) {
@@ -82,8 +85,8 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
     /**
      * add items
      *
-     * @param position
-     * @param objects
+     * @param position index
+     * @param objects  list objects
      */
     public void addRangeItem(int position, List<Object> objects) {
         if (isDataListNotEmpty() && position <= mDataList.size() && position >= 0) {
@@ -94,12 +97,13 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
 
     /**
      * modify an exit item
-     * @param position
-     * @param newObj
+     *
+     * @param position index
+     * @param newObj   the new object
      */
-    public void modifyItem(int position,Object newObj){
+    public void modifyItem(int position, Object newObj) {
         if (isDataListNotEmpty() && position < mDataList.size() && position >= 0) {
-            mDataList.set(position,newObj);
+            mDataList.set(position, newObj);
             notifyItemChanged(position);
         }
     }
@@ -107,7 +111,7 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
     /**
      * remove item
      *
-     * @param position
+     * @param position index
      */
     public void removedItem(int position) {
         if (isDataListNotEmpty() && position < mDataList.size() && position >= 0) {
@@ -239,6 +243,9 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
 
     /**
      * instead by{@link #getItemViewType(Object)}
+     *
+     * @param position item index
+     * @return item view type
      */
     @Deprecated
     @Override

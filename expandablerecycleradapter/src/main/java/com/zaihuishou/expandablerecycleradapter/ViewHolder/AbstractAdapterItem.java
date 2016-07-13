@@ -17,6 +17,7 @@ public abstract class AbstractAdapterItem<T extends Object> {
 
     /**
      * 初始化views
+     * @param root item root view
      */
     public abstract void onBindViews(final View root);
 

@@ -1,5 +1,11 @@
 apply plugin: 'com.android.library'
 
+ext {
+    PUBLISH_GROUP_ID = 'com.zaihuishou'
+    PUBLISH_ARTIFACT_ID = 'expandablerecycleradapter'
+    PUBLISH_VERSION = '1.0.0'
+}
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
@@ -8,7 +14,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -18,6 +24,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 
@@ -26,7 +37,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:24.0.0'
+//    compile 'com.android.support:appcompat-v7:24.0.0'
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:recyclerview-v7:24.0.0'
+    compile 'com.android.support:recyclerview-v7:24.0.0+'
 }
+apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
