@@ -11,7 +11,7 @@ An ExpandableRecycleradapter with Recyclerview
  compile 'com.zaihuishou:expandablerecycleradapter:1.0.0'
  ```
  
- ##Maven
+##Maven
  
  ```
  <dependency>
@@ -22,7 +22,7 @@ An ExpandableRecycleradapter with Recyclerview
  </dependency>
  ```
  
- ##License
+##License
  
  ```
  Copyright 2016 zaihuishou
