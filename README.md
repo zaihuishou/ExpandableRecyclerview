@@ -3,8 +3,7 @@ An ExpandableRecycleradapter with Recyclerview
 
 #Screenshots
 ![effict](/sample-screen.gif)
-
-#Useage
+  
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ExpandableRecyclerview-green.svg?style=true)](https://android-arsenal.com/details/1/3903)
 
@@ -23,6 +22,28 @@ An ExpandableRecycleradapter with Recyclerview
    <type>pom</type>
  </dependency>
  ```
+ 
+#Useage
+
+  * Expandable item:</br>
+  
+    data model class must `implement` [ParentListItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/model/ParentListItem.java),and viewhold class must `extend` [AbstractParentAdapterItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/viewholder/AbstractParentAdapterItem.java)
+    
+       example:`public class Company implements ParentListItem` and `public class CompanyItem extendsAbstractParentAdapterItem`
+   
+* Normal item</br>
+
+   viewholder `extend` [AbstractAdapterItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/viewholder/AbstractAdapterItem.java)</br>
+   
+
+   example:`public class EmployeeItem extends AbstractAdapterItem`
+    
+Extends AbstractParentAdapterItem or AbstractAdapterItem,if you want item can expandable ,you should use first and implement 
+ 
+ 
+#Thanks
+* [bignerdranch/expandable-recycler-view](https://github.com/bignerdranch/expandable-recycler-view)
+* [zaihuishou/RcvAdapter](https://github.com/zaihuishou/RcvAdapter)
  
 ##License
  
