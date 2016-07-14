@@ -6,6 +6,8 @@ An ExpandableRecycleradapter with Recyclerview
 
 #Useage
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ExpandableRecyclerview-green.svg?style=true)](https://android-arsenal.com/details/1/3903)
+
 ##Gradle
  ```
  compile 'com.zaihuishou:expandablerecycleradapter:1.0.0'
