@@ -4,7 +4,6 @@ import android.view.View;
 
 import com.zaihuishou.expandablerecycleradapter.model.ParentListItem;
 
-
 /**
  * Keeps track of expanded state and holds callbacks which can be used to
  * trigger expansion-based events.

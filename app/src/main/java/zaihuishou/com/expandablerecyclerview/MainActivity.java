@@ -15,12 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.zaihuishou.expandablerecycleradapter.adapter.BaseExpandableAdapter;
+import com.zaihuishou.expandablerecycleradapter.divider.DividerItemDecoration;
 import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractAdapterItem;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.zaihuishou.expandablerecycleradapter.divider.DividerItemDecoration;
 
 public class MainActivity extends AppCompatActivity {
 
