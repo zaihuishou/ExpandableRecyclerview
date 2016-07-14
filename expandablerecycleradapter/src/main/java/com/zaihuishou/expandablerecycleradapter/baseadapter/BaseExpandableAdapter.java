@@ -1,4 +1,4 @@
-package com.zaihuishou.expandablerecycleradapter.adapter;
+package com.zaihuishou.expandablerecycleradapter.baseadapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
