@@ -27,18 +27,35 @@ An ExpandableRecycleradapter with Recyclerview
 
   * Expandable item:</br>
   
-    data model class must `implement` [ParentListItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/model/ParentListItem.java),and viewhold class must `extend` [AbstractParentAdapterItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/viewholder/AbstractParentAdapterItem.java)
+    data model class must `implement` [ExpandableListItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/model/ExpandableListItem.java),and viewhold class must `extend` [AbstractParentAdapterItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/viewholder/AbstractParentAdapterItem.java)
     
        example:`public class Company implements ParentListItem` and `public class CompanyItem extendsAbstractParentAdapterItem`
    
 * Normal item</br>
 
-   viewholder `extend` [AbstractAdapterItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/viewholder/AbstractAdapterItem.java)</br>
+   viewholder `extend` [AbstractExpandableAdapterItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/viewholder/AbstractExpandableAdapterItem.java)</br>
    
 
    example:`public class EmployeeItem extends AbstractAdapterItem`
+   
+ * Implement [BaseExpandableAdapter](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/adapter/BaseExpandableAdapter.java)
     
-Extends AbstractParentAdapterItem or AbstractAdapterItem,if you want item can expandable ,you should use first and implement 
+```
+  mBaseExpandableAdapter = new BaseExpandableAdapter(mCompanylist) {
+            @NonNull
+            @Override
+            public AbstractAdapterItem<Object> getItemView(Object type) {
+               
+                return null;
+            }
+
+            @Override
+            public Object getItemViewType(Object t) {
+               
+                return -1;
+            }
+        };
+```
  
  
 #Thanks

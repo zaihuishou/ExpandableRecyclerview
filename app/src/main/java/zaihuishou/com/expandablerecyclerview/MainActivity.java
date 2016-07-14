@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.zaihuishou.expandablerecycleradapter.adapter.BaseExpandableAdapter;
-import com.zaihuishou.expandablerecycleradapter.divider.DividerItemDecoration;
 import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractAdapterItem;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private final int ITEM_TYPE_EMPLOYEE = 3;
 
     private RecyclerView mRecyclerView;
-    private BaseExpandableAdapter mBaseRcvAdapter;
+    private BaseExpandableAdapter mBaseExpandableAdapter;
     private List mCompanylist;
     private boolean hasAdd = false;
 
@@ -49,25 +48,21 @@ public class MainActivity extends AppCompatActivity {
                     if (!hasAdd) {
                         Department department = new Department();
                         department.name = "Add a department";
-                        mBaseRcvAdapter.addItem(department);
+                        mBaseExpandableAdapter.addItem(department);
                         hasAdd = true;
                         fab.setImageResource(android.R.drawable.ic_delete);
-                        Snackbar.make(view,"add item",Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(view, "add item", Snackbar.LENGTH_SHORT).show();
                     } else {
-                        mBaseRcvAdapter.removedItem(mBaseRcvAdapter.getItemCount() - 1);
+                        mBaseExpandableAdapter.removedItem(mBaseExpandableAdapter.getItemCount() - 1);
                         hasAdd = false;
                         fab.setImageResource(android.R.drawable.ic_input_add);
-                        Snackbar.make(view,"delete item",Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(view, "delete item", Snackbar.LENGTH_SHORT).show();
                     }
                 }
             }
         });
-        mCompanylist = new ArrayList<>();
-
-        mCompanylist.add(creaateCompany("Google"));
-
-        mCompanylist.add(creaateCompany("Apple"));
-        mBaseRcvAdapter = new BaseExpandableAdapter(mCompanylist) {
+        initData();
+        mBaseExpandableAdapter = new BaseExpandableAdapter(mCompanylist) {
             @NonNull
             @Override
             public AbstractAdapterItem<Object> getItemView(Object type) {
@@ -91,12 +86,37 @@ public class MainActivity extends AppCompatActivity {
                     return ITEM_TYPE_DEPARTMENT;
                 else if (t instanceof Employee)
                     return ITEM_TYPE_EMPLOYEE;
-                return 0;
+                return -1;
             }
         };
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.setAdapter(mBaseRcvAdapter);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.line_bg,null),50,0,1));
+        mRecyclerView.setAdapter(mBaseExpandableAdapter);
+        /**
+         * item divider
+         */
+//        mRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.line_bg, null), 50, 0, 1));
+        /**
+         * set ExpandCollapseListener
+         */
+        mBaseExpandableAdapter.setExpandCollapseListener(new BaseExpandableAdapter.ExpandCollapseListener() {
+            @Override
+            public void onListItemExpanded(int position) {
+
+            }
+
+            @Override
+            public void onListItemCollapsed(int position) {
+
+            }
+        });
+    }
+
+    private void initData() {
+        mCompanylist = new ArrayList<>();
+
+        mCompanylist.add(creaateCompany("Google"));
+
+        mCompanylist.add(creaateCompany("Apple"));
     }
 
     @NonNull
