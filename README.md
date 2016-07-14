@@ -27,13 +27,13 @@ An ExpandableRecycleradapter with Recyclerview
 
   * Expandable item:</br>
   
-    data model class must `implement` [ExpandableListItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/model/ExpandableListItem.java),and viewhold class must `extend` [AbstractParentAdapterItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/viewholder/AbstractParentAdapterItem.java)
+    data model class must `implement` [ExpandableListItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/model/ExpandableListItem.java),and viewhold class must `extend` [AbstractExpandableAdapterItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/viewholder/AbstractExpandableAdapterItem.java)
     
        example:`public class Company implements ParentListItem` and `public class CompanyItem extendsAbstractParentAdapterItem`
    
 * Normal item</br>
 
-   viewholder `extend` [AbstractExpandableAdapterItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/viewholder/AbstractExpandableAdapterItem.java)</br>
+   viewholder `extend` [AbstractAdapterItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/viewholder/AbstractAdapterItem.java)</br>
    
 
    example:`public class EmployeeItem extends AbstractAdapterItem`
@@ -56,7 +56,7 @@ An ExpandableRecycleradapter with Recyclerview
             }
         };
 ```
- 
+ * All detail please check dameo
  
 #Thanks
 * [bignerdranch/expandable-recycler-view](https://github.com/bignerdranch/expandable-recycler-view)
