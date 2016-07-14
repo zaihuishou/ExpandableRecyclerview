@@ -7,14 +7,12 @@ import android.view.ViewGroup;
 import com.zaihuishou.expandablerecycleradapter.model.ParentListItem;
 import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractAdapterItem;
 import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractParentAdapterItem;
-import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractParentAdapterItem.ParentListItemExpandCollapseListener;
 import com.zaihuishou.expandablerecycleradapter.viewholder.AdapterItemUtil;
 import com.zaihuishou.expandablerecycleradapter.viewholder.RcvAdapterItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseExpandableAdapter extends RecyclerView.Adapter implements ParentListItemExpandCollapseListener {
+public abstract class BaseExpandableAdapter extends RecyclerView.Adapter implements AbstractParentAdapterItem.ParentListItemExpandCollapseListener {
 
     protected List<Object> mDataList;
 
@@ -22,7 +20,7 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
 
     private AdapterItemUtil mUtil = new AdapterItemUtil();
 
-    private List<RecyclerView> mAttachedRecyclerViewPool;
+//    private List<RecyclerView> mAttachedRecyclerViewPool;
 
     private ExpandCollapseListener mExpandCollapseListener;
 
@@ -33,7 +31,7 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
     protected BaseExpandableAdapter(List data) {
         if (data == null) return;
         this.mDataList = data;
-        mAttachedRecyclerViewPool = new ArrayList<>();
+//        mAttachedRecyclerViewPool = new ArrayList<>();
     }
 
     @Override
@@ -257,17 +255,17 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
         return -1;
     }
 
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        mAttachedRecyclerViewPool.add(recyclerView);
-    }
-
-    @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView);
-        mAttachedRecyclerViewPool.remove(recyclerView);
-    }
+//    @Override
+//    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+//        super.onAttachedToRecyclerView(recyclerView);
+//        mAttachedRecyclerViewPool.add(recyclerView);
+//    }
+//
+//    @Override
+//    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+//        super.onDetachedFromRecyclerView(recyclerView);
+//        mAttachedRecyclerViewPool.remove(recyclerView);
+//    }
 
     @NonNull
     public abstract AbstractAdapterItem<Object> getItemView(Object type);
@@ -287,25 +285,6 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
         }
         (rcvHolder).getItem().onUpdateViews(mDataList.get(position), position);
     }
-
-//
-//    private class RcvAdapterItem extends RecyclerView.ViewHolder {
-//
-//        protected AbstractAdapterItem<Object> mItem;
-//
-//        protected RcvAdapterItem(Context context, ViewGroup parent, AbstractAdapterItem<Object> item) {
-//            super(LayoutInflater.from(context).inflate(item.getLayoutResId(), parent, false));
-//            itemView.setClickable(true);
-//            mItem = item;
-//            mItem.onBindViews(itemView);
-//            mItem.onSetViews();
-//        }
-//
-//        protected AbstractAdapterItem<Object> getItem() {
-//            return mItem;
-//        }
-//
-//    }
 
     public interface ExpandCollapseListener {
 
