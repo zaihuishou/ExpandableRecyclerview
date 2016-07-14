@@ -10,6 +10,7 @@ import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractExpandableAda
 import com.zaihuishou.expandablerecycleradapter.viewholder.AdapterItemUtil;
 import com.zaihuishou.expandablerecycleradapter.viewholder.BaseAdapterItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -152,11 +153,16 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
         }
     }
 
-    private void collapseParentListItem(ExpandableListItem parentWrapper, int parentIndex, boolean collapseTriggeredByListItemClick) {
-        if (parentWrapper.isExpanded()) {
-            parentWrapper.setExpanded(false);
+    /**
+     * @param expandableListItem               {@link ExpandableListItem}
+     * @param parentIndex                      item index
+     * @param collapseTriggeredByListItemClick
+     */
+    private void collapseParentListItem(ExpandableListItem expandableListItem, int parentIndex, boolean collapseTriggeredByListItemClick) {
+        if (expandableListItem.isExpanded()) {
+            expandableListItem.setExpanded(false);
 
-            List<?> childItemList = parentWrapper.getChildItemList();
+            List<?> childItemList = expandableListItem.getChildItemList();
             if (childItemList != null) {
                 int childListItemCount = childItemList.size();
                 for (int i = childListItemCount - 1; i >= 0; i--) {
@@ -171,13 +177,43 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
                     mDataList.remove(index);
                 }
                 notifyItemRangeRemoved(parentIndex + 1, childListItemCount);
-                parentWrapper.setExpanded(false);
+                expandableListItem.setExpanded(false);
                 notifyItemRangeChanged(parentIndex + 1, mDataList.size() - parentIndex - 1);
             }
 
             if (collapseTriggeredByListItemClick && mExpandCollapseListener != null) {
                 int expandedCountBeforePosition = getExpandedItemCount(parentIndex);
                 mExpandCollapseListener.onListItemCollapsed(parentIndex - expandedCountBeforePosition);
+            }
+        }
+    }
+
+    /**
+     * collaspe all item
+     */
+    public void collaspeAll() {
+        if (mDataList != null && !mDataList.isEmpty()) {
+            final int size = mDataList.size();
+            ArrayList<Object> expandableListItems = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                Object o = mDataList.get(i);
+                if (o instanceof ExpandableListItem) {
+                    ExpandableListItem expandableListItem = (ExpandableListItem) o;
+                    if (expandableListItem.isExpanded()) {
+                        expandableListItems.add(o);
+                    }
+                }
+            }
+            if (expandableListItems != null && !expandableListItems.isEmpty()) {
+                final int expandedItemSize = expandableListItems.size();
+                if (expandedItemSize > 0) {
+                    for (int i = 0; i < expandedItemSize; i++) {
+                        Object o = expandableListItems.get(i);
+                        int indexOf = mDataList.indexOf(o);
+                        if (indexOf >= 0)
+                            collapseParentListItem((ExpandableListItem) o, indexOf, true);
+                    }
+                }
             }
         }
     }

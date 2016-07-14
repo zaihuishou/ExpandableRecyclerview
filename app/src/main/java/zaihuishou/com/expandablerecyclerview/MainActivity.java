@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,19 +44,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (mRecyclerView != null) {
-                    if (!hasAdd) {
-                        Department department = new Department();
-                        department.name = "Add a department";
-                        mBaseExpandableAdapter.addItem(department);
-                        hasAdd = true;
-                        fab.setImageResource(android.R.drawable.ic_delete);
-                        Snackbar.make(view, "add item", Snackbar.LENGTH_SHORT).show();
-                    } else {
-                        mBaseExpandableAdapter.removedItem(mBaseExpandableAdapter.getItemCount() - 1);
-                        hasAdd = false;
-                        fab.setImageResource(android.R.drawable.ic_input_add);
-                        Snackbar.make(view, "delete item", Snackbar.LENGTH_SHORT).show();
-                    }
+                    mBaseExpandableAdapter.collaspeAll();
+//                    if (!hasAdd) {
+//                        Department department = new Department();
+//                        department.name = "Add a department";
+//                        mBaseExpandableAdapter.addItem(department);
+//                        hasAdd = true;
+//                        fab.setImageResource(android.R.drawable.ic_delete);
+//                        Snackbar.make(view, "add item", Snackbar.LENGTH_SHORT).show();
+//                    } else {
+//                        mBaseExpandableAdapter.removedItem(mBaseExpandableAdapter.getItemCount() - 1);
+//                        hasAdd = false;
+//                        fab.setImageResource(android.R.drawable.ic_input_add);
+//                        Snackbar.make(view, "delete item", Snackbar.LENGTH_SHORT).show();
+//                    }
                 }
             }
         });

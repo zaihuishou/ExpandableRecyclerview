@@ -25,7 +25,7 @@ An ExpandableRecycleradapter with Recyclerview
  
 #How to use
 
-  * Expandable item:</br>
+* Expandable item:</br>
   
     data model class must `implement` [ExpandableListItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/model/ExpandableListItem.java),and viewhold class must `extend` [AbstractExpandableAdapterItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/viewholder/AbstractExpandableAdapterItem.java)
     
@@ -38,7 +38,7 @@ An ExpandableRecycleradapter with Recyclerview
 
    example:`public class EmployeeItem extends AbstractAdapterItem`
    
- * Implement [BaseExpandableAdapter](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/adapter/BaseExpandableAdapter.java)
+* Implement [BaseExpandableAdapter](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/adapter/BaseExpandableAdapter.java)
     
 ```
   mBaseExpandableAdapter = new BaseExpandableAdapter(mCompanylist) {
