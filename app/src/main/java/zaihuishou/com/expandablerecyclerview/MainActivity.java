@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
             @NonNull
             @Override
             public AbstractAdapterItem<Object> getItemView(Object type) {
-                int type1 = (int) type;
-                switch (type1) {
+                int itemType = (int) type;
+                switch (itemType) {
                     case ITEM_TYPE_COMPANY:
                         return new CompanyItem();
                     case ITEM_TYPE_DEPARTMENT:
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         };
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mBaseRcvAdapter);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.line_bg,null),50,0,3));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.line_bg,null),50,0,1));
     }
 
     @NonNull

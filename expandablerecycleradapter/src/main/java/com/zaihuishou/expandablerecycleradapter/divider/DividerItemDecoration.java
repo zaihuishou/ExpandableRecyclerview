@@ -8,8 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractAdapterItem;
-import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractParentAdapterItem;
-import com.zaihuishou.expandablerecycleradapter.viewholder.RcvAdapterItem;
+import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractExpandableAdapterItem;
+import com.zaihuishou.expandablerecycleradapter.viewholder.BaseAdapterItem;
 
 /**
  * Created by zhiqiang on 15-11-12.
@@ -112,9 +112,9 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
                 View childView = parent.getChildAt(i);
                 int rLeft = left;
                 //is parent
-                RcvAdapterItem childViewHolder = (RcvAdapterItem) parent.getChildViewHolder(childView);
+                BaseAdapterItem childViewHolder = (BaseAdapterItem) parent.getChildViewHolder(childView);
                 AbstractAdapterItem<Object> item = childViewHolder.getItem();
-                if (!(item instanceof AbstractParentAdapterItem))
+                if (!(item instanceof AbstractExpandableAdapterItem))
                     rLeft += mLeftOrTopPadding;
                 RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) childView.getLayoutParams();
                 int bottom = childView.getTop() - params.topMargin;

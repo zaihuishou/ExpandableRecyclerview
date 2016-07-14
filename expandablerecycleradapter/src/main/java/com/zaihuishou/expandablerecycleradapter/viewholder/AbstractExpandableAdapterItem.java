@@ -2,30 +2,31 @@ package com.zaihuishou.expandablerecycleradapter.viewholder;
 
 import android.view.View;
 
-import com.zaihuishou.expandablerecycleradapter.model.ParentListItem;
+import com.zaihuishou.expandablerecycleradapter.model.ExpandableListItem;
 
 /**
  * Keeps track of expanded state and holds callbacks which can be used to
  * trigger expansion-based events.
- *
- * @author Ryan Brooks
- * @version 1.0
- * @since 5/27/2015
+ * if you want to item can expandable,you must extands this class{@link AbstractExpandableAdapterItem}
+ * creater: zaihuishou
+ * create time: 7/13/16.
+ * email:tanzhiqiang.cathy@gmail.com
  */
-public abstract class AbstractParentAdapterItem extends AbstractAdapterItem implements View.OnClickListener {
+
+public abstract class AbstractExpandableAdapterItem extends AbstractAdapterItem implements View.OnClickListener {
 
     private int itemIndex = -1;
     private ParentListItemExpandCollapseListener mParentListItemExpandCollapseListener;
-    private ParentListItem mParentListItem;
+    private ExpandableListItem mParentListItem;
 
     @Override
     public void onUpdateViews(java.lang.Object model, int position) {
         this.itemIndex = position;
-        if (model instanceof ParentListItem)
-            mParentListItem = (ParentListItem) model;
+        if (model instanceof ExpandableListItem)
+            mParentListItem = (ExpandableListItem) model;
     }
 
-    public ParentListItem getParentListItem() {
+    public ExpandableListItem getParentListItem() {
         return mParentListItem;
     }
 
@@ -69,7 +70,7 @@ public abstract class AbstractParentAdapterItem extends AbstractAdapterItem impl
     /**
      * Getter for the {@link ParentListItemExpandCollapseListener} implemented in
      *
-     * @return The {@link ParentListItemExpandCollapseListener} set in the {@link AbstractParentAdapterItem}
+     * @return The {@link ParentListItemExpandCollapseListener} set in the {@link AbstractExpandableAdapterItem}
      */
     public ParentListItemExpandCollapseListener getParentListItemExpandCollapseListener() {
         return mParentListItemExpandCollapseListener;
@@ -78,7 +79,7 @@ public abstract class AbstractParentAdapterItem extends AbstractAdapterItem impl
     /**
      * Setter for the {@link ParentListItemExpandCollapseListener} implemented in
      *
-     * @param parentListItemExpandCollapseListener The {@link ParentListItemExpandCollapseListener} to set on the {@link AbstractParentAdapterItem}
+     * @param parentListItemExpandCollapseListener The {@link ParentListItemExpandCollapseListener} to set on the {@link AbstractExpandableAdapterItem}
      */
     public void setParentListItemExpandCollapseListener(ParentListItemExpandCollapseListener parentListItemExpandCollapseListener) {
         mParentListItemExpandCollapseListener = parentListItemExpandCollapseListener;

@@ -1,18 +1,11 @@
 package zaihuishou.com.expandablerecyclerview;
 
 
-import com.zaihuishou.expandablerecycleradapter.model.ParentListItem;
+import com.zaihuishou.expandablerecycleradapter.model.ExpandableListItem;
 
 import java.util.List;
 
-/**
- * 创建者: zhiqiang(谭志强)
- * 创建时间 16-7-9.
- * 作者邮箱 tanzhiqiang@todayoffice.cn
- * 描述:
- */
-
-public class Department implements ParentListItem {
+public class Department implements ExpandableListItem {
 
     private boolean mExpand = false;
     public String name;

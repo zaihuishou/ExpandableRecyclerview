@@ -3,8 +3,11 @@ package com.zaihuishou.expandablerecycleradapter.viewholder;
 import android.util.SparseArray;
 
 /**
- * @date 2015/8/29
+ * creater: zaihuishou
+ * create time: 7/13/16.
+ * email:tanzhiqiang.cathy@gmail.com
  */
+
 public class AdapterItemUtil {
 
     private SparseArray<Object> typeSArr = new SparseArray<>();

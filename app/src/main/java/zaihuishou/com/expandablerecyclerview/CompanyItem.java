@@ -1,21 +1,14 @@
 package zaihuishou.com.expandablerecyclerview;
 
 import android.animation.ObjectAnimator;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractParentAdapterItem;
+import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractExpandableAdapterItem;
 
-/**
- * 创建者: zhiqiang(谭志强)
- * 创建时间 16-7-9.
- * 作者邮箱 tanzhiqiang@todayoffice.cn
- * 描述:
- */
 
-public class CompanyItem extends AbstractParentAdapterItem {
+public class CompanyItem extends AbstractExpandableAdapterItem {
 
     private TextView mName;
     private ImageView mArrow;
@@ -60,7 +53,6 @@ public class CompanyItem extends AbstractParentAdapterItem {
         Company company = (Company) model;
         mName.setText(company.name);
         if (position == 0) {
-            Log.i("BaseExpandableAdapter", "company:" + company.name);
         }
     }
 }

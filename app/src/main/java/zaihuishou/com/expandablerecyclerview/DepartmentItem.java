@@ -5,19 +5,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zaihuishou.expandablerecycleradapter.model.ParentListItem;
-import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractParentAdapterItem;
+import com.zaihuishou.expandablerecycleradapter.model.ExpandableListItem;
+import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractExpandableAdapterItem;
 
 import java.util.List;
 
-/**
- * 创建者: zhiqiang(谭志强)
- * 创建时间 16-7-11.
- * 作者邮箱 tanzhiqiang@todayoffice.cn
- * 描述:
- */
-
-public class DepartmentItem extends AbstractParentAdapterItem {
+public class DepartmentItem extends AbstractExpandableAdapterItem {
 
     private TextView mName;
     private ImageView mArrow;
@@ -60,7 +53,7 @@ public class DepartmentItem extends AbstractParentAdapterItem {
         onSetViews();
         Department department = (Department) model;
         mName.setText(department.name);
-        ParentListItem parentListItem = (ParentListItem) model;
+        ExpandableListItem parentListItem = (ExpandableListItem) model;
         List<?> childItemList = parentListItem.getChildItemList();
         if (childItemList != null && !childItemList.isEmpty())
             mArrow.setVisibility(View.VISIBLE);

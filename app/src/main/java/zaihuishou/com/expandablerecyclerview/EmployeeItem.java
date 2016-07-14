@@ -5,12 +5,6 @@ import android.widget.TextView;
 
 import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractAdapterItem;
 
-/**
- * 创建者: zhiqiang(谭志强)
- * 创建时间 16-7-11.
- * 作者邮箱 tanzhiqiang@todayoffice.cn
- * 描述:
- */
 
 public class EmployeeItem extends AbstractAdapterItem {
 
