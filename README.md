@@ -23,7 +23,7 @@ An ExpandableRecycleradapter with Recyclerview
  </dependency>
  ```
  
-#Useage
+#How to use
 
   * Expandable item:</br>
   
