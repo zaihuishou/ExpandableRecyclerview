@@ -44,7 +44,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (mRecyclerView != null) {
-                    mBaseExpandableAdapter.collaspeAll();
+                    /**
+                     * collapse all parents
+                     */
+//                    mBaseExpandableAdapter.collapseAllParents(false);
+                    /**
+                     * change item
+                     */
+                    Company company = (Company) mBaseExpandableAdapter.getDataList().get(0);
+                    company.name = company.name + "-has changed";
+                    mBaseExpandableAdapter.modifyItem(0, company);
+                    /**
+                     * expand specified parent item
+                     */
+//                    mBaseExpandableAdapter.expandParent(0);
 //                    if (!hasAdd) {
 //                        Department department = new Department();
 //                        department.name = "Add a department";
@@ -92,10 +105,6 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mBaseExpandableAdapter);
         /**
-         * item divider
-         */
-//        mRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.line_bg, null), 50, 0, 1));
-        /**
          * set ExpandCollapseListener
          */
         mBaseExpandableAdapter.setExpandCollapseListener(new BaseExpandableAdapter.ExpandCollapseListener() {
@@ -125,12 +134,12 @@ public class MainActivity extends AppCompatActivity {
         firstCompany.name = companyName;
 
         List<Department> departments = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
             Department department = new Department();
             department.name = "Department:" + i;
             if (i == 0) {
                 List<Employee> employeeList = new ArrayList<>();
-                for (int j = 0; j < 4; j++) {
+                for (int j = 0; j < 2; j++) {
                     Employee employee = new Employee();
                     employee.name = "Employee:" + j;
                     employeeList.add(employee);

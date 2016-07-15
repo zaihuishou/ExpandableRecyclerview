@@ -31,7 +31,7 @@ public class CompanyItem extends AbstractExpandableAdapterItem {
         if (expanded) {
             start = 0f;
             target = 90f;
-        }else {
+        } else {
             start = 90f;
             target = 0f;
         }
@@ -50,6 +50,7 @@ public class CompanyItem extends AbstractExpandableAdapterItem {
     public void onUpdateViews(Object model, int position) {
         super.onUpdateViews(model, position);
         onSetViews();
+        onExpansionToggled(getParentListItem().isExpanded());
         Company company = (Company) model;
         mName.setText(company.name);
         if (position == 0) {

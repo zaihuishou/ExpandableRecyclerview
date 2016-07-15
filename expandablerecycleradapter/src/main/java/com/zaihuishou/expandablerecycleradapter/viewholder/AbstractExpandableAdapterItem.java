@@ -30,6 +30,10 @@ public abstract class AbstractExpandableAdapterItem extends AbstractAdapterItem 
         return mParentListItem;
     }
 
+    public int getItemIndex() {
+        return itemIndex;
+    }
+
     @Override
     public void onBindViews(View root) {
         root.setOnClickListener(this);
@@ -122,7 +126,7 @@ public abstract class AbstractExpandableAdapterItem extends AbstractAdapterItem 
      * Triggers expansion of the parent.
      */
     protected void expandView() {
-        onExpansionToggled(true);
+//        onExpansionToggled(true);
         if (mParentListItemExpandCollapseListener != null) {
             mParentListItemExpandCollapseListener.onParentListItemExpanded(itemIndex);
         }
@@ -132,7 +136,7 @@ public abstract class AbstractExpandableAdapterItem extends AbstractAdapterItem 
      * Triggers collapse of the parent.
      */
     protected void collapseView() {
-        onExpansionToggled(false);
+//        onExpansionToggled(false);
         if (mParentListItemExpandCollapseListener != null) {
             mParentListItemExpandCollapseListener.onParentListItemCollapsed(itemIndex);
         }

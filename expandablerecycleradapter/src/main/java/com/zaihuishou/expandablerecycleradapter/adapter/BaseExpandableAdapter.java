@@ -29,6 +29,8 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
 
     private ExpandCollapseListener mExpandCollapseListener;
 
+    private List<RecyclerView> mRecyclerViewList;
+
     public void setExpandCollapseListener(ExpandCollapseListener expandCollapseListener) {
         mExpandCollapseListener = expandCollapseListener;
     }
@@ -36,6 +38,7 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
     protected BaseExpandableAdapter(List data) {
         if (data == null) return;
         this.mDataList = data;
+        mRecyclerViewList = new ArrayList<>();
     }
 
     @Override
@@ -149,7 +152,7 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
     public void onParentListItemExpanded(int position) {
         Object o = mDataList.get(position);
         if (o instanceof ExpandableListItem) {
-            expandParentListItem((ExpandableListItem) o, position, true);
+            expandParentListItem((ExpandableListItem) o, position, true, false);
         }
     }
 
@@ -160,22 +163,26 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
      */
     private void collapseParentListItem(ExpandableListItem expandableListItem, int parentIndex, boolean collapseTriggeredByListItemClick) {
         if (expandableListItem.isExpanded()) {
-            expandableListItem.setExpanded(false);
-
             List<?> childItemList = expandableListItem.getChildItemList();
-            if (childItemList != null) {
+            if (childItemList != null && !childItemList.isEmpty()) {
+                notifyItemExpandedOrCollapsed(parentIndex, false);
                 int childListItemCount = childItemList.size();
                 for (int i = childListItemCount - 1; i >= 0; i--) {
                     int index = parentIndex + i + 1;
                     Object o = mDataList.get(index);
                     if (o instanceof ExpandableListItem) {
-                        ExpandableListItem parentListItem = (ExpandableListItem) o;
-                        if (parentListItem.isExpanded()) {
+                        ExpandableListItem parentListItem;
+                        try {
+                            parentListItem = (ExpandableListItem) o;
                             collapseParentListItem(parentListItem, index, false);
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
+
                     }
                     mDataList.remove(index);
                 }
+
                 notifyItemRangeRemoved(parentIndex + 1, childListItemCount);
                 expandableListItem.setExpanded(false);
                 notifyItemRangeChanged(parentIndex + 1, mDataList.size() - parentIndex - 1);
@@ -189,21 +196,33 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
     }
 
     /**
-     * collaspe all item
+     * notify item state changed
+     *
+     * @param parentIndex
+     * @param isExpand
      */
-    public void collaspeAll() {
-        if (mDataList != null && !mDataList.isEmpty()) {
-            final int size = mDataList.size();
-            ArrayList<Object> expandableListItems = new ArrayList<>();
-            for (int i = 0; i < size; i++) {
-                Object o = mDataList.get(i);
-                if (o instanceof ExpandableListItem) {
-                    ExpandableListItem expandableListItem = (ExpandableListItem) o;
-                    if (expandableListItem.isExpanded()) {
-                        expandableListItems.add(o);
-                    }
+    private void notifyItemExpandedOrCollapsed(int parentIndex, boolean isExpand) {
+        if (mRecyclerViewList != null && !mRecyclerViewList.isEmpty()) {
+            RecyclerView recyclerView = mRecyclerViewList.get(0);
+            BaseAdapterItem viewHolderForAdapterPosition = (BaseAdapterItem) recyclerView.findViewHolderForAdapterPosition(parentIndex);
+            try {
+
+                AbstractAdapterItem<Object> item = viewHolderForAdapterPosition.getItem();
+                if (item != null && item instanceof AbstractExpandableAdapterItem) {
+                    AbstractExpandableAdapterItem abstractExpandableAdapterItem = (AbstractExpandableAdapterItem) item;
+                    abstractExpandableAdapterItem.onExpansionToggled(isExpand);
                 }
+            } catch (Exception e) {
             }
+        }
+    }
+
+    /**
+     * Collapses all parents in the list.
+     */
+    public void collapseAllParents() {
+        if (mDataList != null && !mDataList.isEmpty()) {
+            ArrayList<Object> expandableListItems = getParents(true);
             if (expandableListItems != null && !expandableListItems.isEmpty()) {
                 final int expandedItemSize = expandableListItems.size();
                 if (expandedItemSize > 0) {
@@ -211,26 +230,69 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
                         Object o = expandableListItems.get(i);
                         int indexOf = mDataList.indexOf(o);
                         if (indexOf >= 0)
-                            collapseParentListItem((ExpandableListItem) o, indexOf, true);
+                            collapseParentListItem((ExpandableListItem) o, indexOf, false);
                     }
                 }
             }
         }
     }
 
-    private void expandParentListItem(ExpandableListItem parentWrapper, int parentIndex, boolean expansionTriggeredByListItemClick) {
-        if (!parentWrapper.isExpanded()) {
-            List<?> childItemList = parentWrapper.getChildItemList();
+    /**
+     * @param isExpanded
+     * @return return all parents
+     */
+    @NonNull
+    private ArrayList<Object> getParents(boolean isExpanded) {
+        final int size = mDataList.size();
+        ArrayList<Object> expandableListItems = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            Object o = mDataList.get(i);
+            if (o instanceof ExpandableListItem) {
+                ExpandableListItem expandableListItem = (ExpandableListItem) o;
+                if (isExpanded) {
+                    if (expandableListItem.isExpanded())
+                        expandableListItems.add(o);
+                } else {
+                    if (!expandableListItem.isExpanded())
+                        expandableListItems.add(o);
+                }
+            }
+        }
+        return expandableListItems;
+    }
+
+    /**
+     * expand index item
+     *
+     * @param expandableListItem
+     * @param parentIndex                       The index of the parent to collapse
+     * @param expansionTriggeredByListItemClick
+     */
+    protected void expandParentListItem(ExpandableListItem expandableListItem, int parentIndex, boolean expansionTriggeredByListItemClick, boolean isExpandAllChildren) {
+        if (!expandableListItem.isExpanded()) {
+            List<?> childItemList = expandableListItem.getChildItemList();
             if (childItemList != null && !childItemList.isEmpty()) {
-                parentWrapper.setExpanded(true);
+                expandableListItem.setExpanded(true);
                 int childListItemCount = childItemList.size();
                 for (int i = 0; i < childListItemCount; i++) {
-                    mDataList.add(parentIndex + i + 1, childItemList.get(i));
+                    Object o = childItemList.get(i);
+                    int newIndex = parentIndex + i + 1;
+                    mDataList.add(newIndex, o);
+                    notifyItemInserted(newIndex);
+                    if (isExpandAllChildren)
+                        if (o instanceof ExpandableListItem) {
+//                            notifyItemInserted(newIndex);
+//                            if (parentIndex != mDataList.size() - 1)
+//                                notifyItemRangeChanged(parentIndex + 1, mDataList.size() - parentIndex - 1);
+                            expandParentListItem((ExpandableListItem) o, newIndex, expansionTriggeredByListItemClick, isExpandAllChildren);
+                        }
                 }
-                notifyItemRangeInserted(parentIndex + 1, childListItemCount);
+//                notifyItemRangeInserted(parentIndex + 1, childListItemCount);
                 int positionStart = parentIndex + childListItemCount;
                 if (parentIndex != mDataList.size() - 1)
                     notifyItemRangeChanged(positionStart, mDataList.size() - positionStart);
+
+//                notifyItemExpandedOrCollapsed(parentIndex, true);
             }
             if (expansionTriggeredByListItemClick && mExpandCollapseListener != null) {
                 int expandedCountBeforePosition = getExpandedItemCount(parentIndex);
@@ -238,6 +300,42 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
             }
         }
     }
+
+    /**
+     * expand specified parent item
+     *
+     * @param parentIndex The index of the parent to expand
+     */
+    public void expandParent(int parentIndex) {
+        if (mDataList != null && !mDataList.isEmpty() && parentIndex >= 0 && parentIndex < mDataList.size()) {
+            Object o = mDataList.get(parentIndex);
+            if (o instanceof ExpandableListItem) {
+                expandParentListItem((ExpandableListItem) o, parentIndex, false, false);
+            }
+        }
+    }
+
+    /**
+     * expand all parents item
+     */
+    public void expandAllParents() {
+        ArrayList<Object> expandableListItems = getParents(false);
+        if (expandableListItems != null && !expandableListItems.isEmpty()) {
+            final int expandedItemSize = expandableListItems.size();
+            if (expandedItemSize > 0) {
+                for (int i = 0; i < expandedItemSize; i++) {
+                    Object o = expandableListItems.get(i);
+                    int indexOf = mDataList.indexOf(o);
+                    if (indexOf >= 0)
+                        expandParentListItem((ExpandableListItem) o, indexOf, false, true);
+                }
+            }
+        }
+    }
+
+//    private void expandOrCollaspeParents(boolean isExpand) {
+//
+//    }
 
     /**
      * Gets the number of expanded child list items before the specified position.
@@ -316,6 +414,18 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
             abstractParentAdapterItem.setParentListItemExpandCollapseListener(this);
         }
         (rcvHolder).getItem().onUpdateViews(mDataList.get(position), position);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        mRecyclerViewList.add(recyclerView);
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        mRecyclerViewList.remove(recyclerView);
     }
 
     public interface ExpandCollapseListener {
