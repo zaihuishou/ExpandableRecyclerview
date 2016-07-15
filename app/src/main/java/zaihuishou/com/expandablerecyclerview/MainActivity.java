@@ -114,13 +114,13 @@ public class MainActivity extends AppCompatActivity {
     private void initData() {
         mCompanylist = new ArrayList<>();
 
-        mCompanylist.add(creaateCompany("Google"));
+        mCompanylist.add(createCompany("Google"));
 
-        mCompanylist.add(creaateCompany("Apple"));
+        mCompanylist.add(createCompany("Apple"));
     }
 
     @NonNull
-    private Company creaateCompany(String companyName) {
+    private Company createCompany(String companyName) {
         Company firstCompany = new Company();
         firstCompany.name = companyName;
 
