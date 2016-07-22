@@ -29,7 +29,7 @@ An ExpandableRecycleradapter with Recyclerview
   
     data model class must `implement` [ExpandableListItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/model/ExpandableListItem.java),and viewhold class must `extend` [AbstractExpandableAdapterItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/viewholder/AbstractExpandableAdapterItem.java)
     
-       example:`public class Company implements ParentListItem` and `public class CompanyItem extendsAbstractParentAdapterItem`
+       example:`public class Company implements ExpandableListItem` and `public class CompanyItem AbstractExpandableAdapterItem`
    
 * Normal item</br>
 
