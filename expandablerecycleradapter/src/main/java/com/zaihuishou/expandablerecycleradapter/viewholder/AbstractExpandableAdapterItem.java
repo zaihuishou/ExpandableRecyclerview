@@ -1,5 +1,6 @@
 package com.zaihuishou.expandablerecycleradapter.viewholder;
 
+import android.support.annotation.CallSuper;
 import android.view.View;
 
 import com.zaihuishou.expandablerecycleradapter.model.ExpandableListItem;
@@ -19,6 +20,7 @@ public abstract class AbstractExpandableAdapterItem extends AbstractAdapterItem 
     private ParentListItemExpandCollapseListener mParentListItemExpandCollapseListener;
     private ExpandableListItem mParentListItem;
 
+    @CallSuper
     @Override
     public void onUpdateViews(java.lang.Object model, int position) {
         this.itemIndex = position;
@@ -34,6 +36,7 @@ public abstract class AbstractExpandableAdapterItem extends AbstractAdapterItem 
         return itemIndex;
     }
 
+    @CallSuper
     @Override
     public void onBindViews(View root) {
         root.setOnClickListener(this);
