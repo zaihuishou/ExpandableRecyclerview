@@ -132,23 +132,23 @@ public class MainActivity extends AppCompatActivity {
     private Company createCompany(String companyName) {
         Company firstCompany = new Company();
         firstCompany.name = companyName;
-
-        List<Department> departments = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            Department department = new Department();
-            department.name = "Department:" + i;
-            if (i == 0) {
-                List<Employee> employeeList = new ArrayList<>();
-                for (int j = 0; j < 2; j++) {
-                    Employee employee = new Employee();
-                    employee.name = "Employee:" + j;
-                    employeeList.add(employee);
-                }
-                department.mEmployees = employeeList;
-            }
-            departments.add(department);
-        }
-        firstCompany.mDepartments = departments;
+//
+//        List<Department> departments = new ArrayList<>();
+//        for (int i = 0; i < 2; i++) {
+//            Department department = new Department();
+//            department.name = "Department:" + i;
+//            if (i == 0) {
+//                List<Employee> employeeList = new ArrayList<>();
+//                for (int j = 0; j < 2; j++) {
+//                    Employee employee = new Employee();
+//                    employee.name = "Employee:" + j;
+//                    employeeList.add(employee);
+//                }
+//                department.mEmployees = employeeList;
+//            }
+//            departments.add(department);
+//        }
+//        firstCompany.mDepartments = departments;
         return firstCompany;
     }
 
