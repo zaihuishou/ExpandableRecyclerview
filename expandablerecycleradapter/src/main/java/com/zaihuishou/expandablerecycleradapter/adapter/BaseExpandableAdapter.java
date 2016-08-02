@@ -150,10 +150,14 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
      */
     @Override
     public void onParentListItemExpanded(int position) {
-        Object o = mDataList.get(position);
-        if (o instanceof ExpandableListItem) {
-            expandParentListItem((ExpandableListItem) o, position, true, false);
+        try {
+            Object o = mDataList.get(position);
+            if (o instanceof ExpandableListItem) {
+                expandParentListItem((ExpandableListItem) o, position, true, false);
+            }
+        } catch (IndexOutOfBoundsException e) {
         }
+
     }
 
     /**
