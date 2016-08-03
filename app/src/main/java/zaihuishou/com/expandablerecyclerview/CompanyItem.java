@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractExpandableAdapterItem;
 
@@ -12,6 +13,7 @@ public class CompanyItem extends AbstractExpandableAdapterItem {
 
     private TextView mName;
     private ImageView mArrow;
+    private Company mCompany;
 
     @Override
     public int getLayoutResId() {
@@ -19,7 +21,7 @@ public class CompanyItem extends AbstractExpandableAdapterItem {
     }
 
     @Override
-    public void onBindViews(View root) {
+    public void onBindViews(final View root) {
         /**
          * control item expand and unexpand
          */
@@ -27,6 +29,7 @@ public class CompanyItem extends AbstractExpandableAdapterItem {
             @Override
             public void onClick(View view) {
                 doExpandOrUnexpand();
+                Toast.makeText(root.getContext(), "click company：" +mCompany.name,Toast.LENGTH_SHORT).show();
             }
         });
         mName = (TextView) root.findViewById(R.id.tv_name);
@@ -59,10 +62,8 @@ public class CompanyItem extends AbstractExpandableAdapterItem {
         super.onUpdateViews(model, position);
         onSetViews();
         onExpansionToggled(getExpandableListItem().isExpanded());
-        Company company = (Company) model;
-        mName.setText(company.name);
-        if (position == 0) {
-        }
+        mCompany = (Company) model;
+        mName.setText(mCompany.name);
     }
 
 
