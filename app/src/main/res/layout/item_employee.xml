@@ -5,12 +5,11 @@
               android:layout_height="50dp"
               android:gravity="center_vertical"
               android:orientation="vertical"
-              android:paddingLeft="40dp">
+              android:paddingLeft="80dp">
 
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="dkakfjdajf"
         android:textColor="#06c7c7"/>
 </LinearLayout>

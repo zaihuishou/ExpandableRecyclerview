@@ -20,7 +20,15 @@ public class CompanyItem extends AbstractExpandableAdapterItem {
 
     @Override
     public void onBindViews(View root) {
-        super.onBindViews(root);
+        /**
+         * control item expand and unexpand
+         */
+        root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doExpandOrUnexpand();
+            }
+        });
         mName = (TextView) root.findViewById(R.id.tv_name);
         mArrow = (ImageView) root.findViewById(R.id.iv_arrow);
     }
@@ -50,10 +58,12 @@ public class CompanyItem extends AbstractExpandableAdapterItem {
     public void onUpdateViews(Object model, int position) {
         super.onUpdateViews(model, position);
         onSetViews();
-        onExpansionToggled(getParentListItem().isExpanded());
+        onExpansionToggled(getExpandableListItem().isExpanded());
         Company company = (Company) model;
         mName.setText(company.name);
         if (position == 0) {
         }
     }
+
+
 }

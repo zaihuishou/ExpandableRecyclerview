@@ -14,32 +14,26 @@ import com.zaihuishou.expandablerecycleradapter.model.ExpandableListItem;
  * email:tanzhiqiang.cathy@gmail.com
  */
 
-public abstract class AbstractExpandableAdapterItem extends AbstractAdapterItem implements View.OnClickListener {
+public abstract class AbstractExpandableAdapterItem extends AbstractAdapterItem {
 
     private int itemIndex = -1;
     private ParentListItemExpandCollapseListener mParentListItemExpandCollapseListener;
-    private ExpandableListItem mParentListItem;
+    private ExpandableListItem mExpandableListItem;
 
     @CallSuper
     @Override
     public void onUpdateViews(java.lang.Object model, int position) {
         this.itemIndex = position;
         if (model instanceof ExpandableListItem)
-            mParentListItem = (ExpandableListItem) model;
+            mExpandableListItem = (ExpandableListItem) model;
     }
 
-    public ExpandableListItem getParentListItem() {
-        return mParentListItem;
+    public ExpandableListItem getExpandableListItem() {
+        return mExpandableListItem;
     }
 
     public int getItemIndex() {
         return itemIndex;
-    }
-
-    @CallSuper
-    @Override
-    public void onBindViews(View root) {
-        root.setOnClickListener(this);
     }
 
     /**
@@ -93,25 +87,6 @@ public abstract class AbstractExpandableAdapterItem extends AbstractAdapterItem 
     }
 
     /**
-     * {@link android.view.View.OnClickListener} to listen for click events on
-     * the entire parent {@link View}.
-     * <p>
-     * Only registered if {@link #shouldItemViewClickToggleExpansion()} is true.
-     *
-     * @param v The {@link View} that is the trigger for expansion
-     */
-    @Override
-    public void onClick(View v) {
-        if (mParentListItem != null) {
-            if (mParentListItem.isExpanded()) {
-                collapseView();
-            } else {
-                expandView();
-            }
-        }
-    }
-
-    /**
      * Used to determine whether a click in the entire parent {@link View}
      * should trigger row expansion.
      * <p>
@@ -129,8 +104,8 @@ public abstract class AbstractExpandableAdapterItem extends AbstractAdapterItem 
      * Triggers expansion of the parent.
      */
     protected void expandView() {
-        onExpansionToggled(true);
         if (mParentListItemExpandCollapseListener != null) {
+            onExpansionToggled(true);
             mParentListItemExpandCollapseListener.onParentListItemExpanded(itemIndex);
         }
     }
@@ -139,9 +114,23 @@ public abstract class AbstractExpandableAdapterItem extends AbstractAdapterItem 
      * Triggers collapse of the parent.
      */
     protected void collapseView() {
-        onExpansionToggled(false);
         if (mParentListItemExpandCollapseListener != null) {
+            onExpansionToggled(false);
             mParentListItemExpandCollapseListener.onParentListItemCollapsed(itemIndex);
+        }
+    }
+
+    /**
+     * expand or unexpand item
+     */
+    protected void doExpandOrUnexpand() {
+        if (mExpandableListItem != null && mExpandableListItem.getChildItemList() != null
+                && !mExpandableListItem.getChildItemList().isEmpty()) {
+            if (getExpandableListItem().isExpanded()) {
+                collapseView();
+            } else {
+                expandView();
+            }
         }
     }
 }

@@ -10,10 +10,11 @@ import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractExpandableAda
 
 import java.util.List;
 
-public class DepartmentItem extends AbstractExpandableAdapterItem {
+public class DepartmentItem extends AbstractExpandableAdapterItem implements View.OnClickListener {
 
     private TextView mName;
     private ImageView mArrow;
+    private TextView mExpand;
 
     @Override
     public int getLayoutResId() {
@@ -22,18 +23,22 @@ public class DepartmentItem extends AbstractExpandableAdapterItem {
 
     @Override
     public void onBindViews(View root) {
-        super.onBindViews(root);
         mName = (TextView) root.findViewById(R.id.tv_name);
         mArrow = (ImageView) root.findViewById(R.id.iv_arrow);
+        mExpand = (TextView) root.findViewById(R.id.tv_expand);
+        mExpand.setText("expand");
+        mExpand.setOnClickListener(this);
     }
 
     @Override
     public void onExpansionToggled(boolean expanded) {
         float start, target;
         if (expanded) {
+            mExpand.setText("unexpand");
             start = 0f;
             target = 90f;
         } else {
+            mExpand.setText("expand");
             start = 90f;
             target = 0f;
         }
@@ -57,5 +62,19 @@ public class DepartmentItem extends AbstractExpandableAdapterItem {
         List<?> childItemList = parentListItem.getChildItemList();
         if (childItemList != null && !childItemList.isEmpty())
             mArrow.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onClick(View view) {
+        /**
+         * control item expand and unexpand
+         */
+        if (getExpandableListItem() != null && getExpandableListItem().getChildItemList() != null) {
+            if (getExpandableListItem().isExpanded()) {
+                collapseView();
+            } else {
+                expandView();
+            }
+        }
     }
 }

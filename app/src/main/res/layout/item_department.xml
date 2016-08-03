@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                style="@style/ItemBg"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:orientation="vertical"
     >
+
+    <ImageView
+        android:id="@+id/iv_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:src="@mipmap/arrow_down"
+        />
 
     <TextView
         android:id="@+id/tv_name"
@@ -12,16 +21,18 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="26dp"
+        android:layout_toRightOf="@id/iv_arrow"
         android:textColor="#dc070b"
         />
 
-    <ImageView
-        android:id="@+id/iv_arrow"
+    <TextView
+        android:id="@+id/tv_expand"
+        style="@style/ItemBg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="16dp"
-        android:src="@mipmap/arrow_down"
-        />
+        android:textColor="#dc070b"/>
+
 </RelativeLayout>

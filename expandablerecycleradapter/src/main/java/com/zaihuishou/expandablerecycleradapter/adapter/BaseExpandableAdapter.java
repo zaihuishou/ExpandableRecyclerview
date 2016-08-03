@@ -157,7 +157,6 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
             }
         } catch (IndexOutOfBoundsException e) {
         }
-
     }
 
     /**
