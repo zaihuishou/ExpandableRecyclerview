@@ -27,7 +27,7 @@ An ExpandableRecycleradapter with Recyclerview
 
 * Expandable item:</br>
   
-    data model class must `implement` [ExpandableListItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/model/ExpandableListItem.java),and viewhold class must `extend` [AbstractExpandableAdapterItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/viewholder/AbstractExpandableAdapterItem.java)
+    data model class must `implement` [ExpandableListItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/model/ExpandableListItem.java),and viewholder class must `extend` [AbstractExpandableAdapterItem](https://github.com/zaihuishou/ExpandableRecyclerview/blob/master/expandablerecycleradapter/src/main/java/com/zaihuishou/expandablerecycleradapter/viewholder/AbstractExpandableAdapterItem.java)
     
        example:`public class Company implements ExpandableListItem` and `public class CompanyItem AbstractExpandableAdapterItem`
    
@@ -56,7 +56,7 @@ An ExpandableRecycleradapter with Recyclerview
             }
         };
 ```
- * All detail please check dameo
+ * For all details, please check demo
  
 #Thanks
 * [bignerdranch/expandable-recycler-view](https://github.com/bignerdranch/expandable-recycler-view)
