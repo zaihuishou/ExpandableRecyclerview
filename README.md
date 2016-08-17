@@ -58,6 +58,9 @@ An ExpandableRecycleradapter with Recyclerview
 ```
  * For all details, please check demo
  
+#Databinding Use
+* If you want to use this with databinding,please check [ExpandableRecyclerview-Databinding](https://github.com/zaihuishou/ExpandableRecyclerview-Databinding) 
+ 
 #Thanks
 * [bignerdranch/expandable-recycler-view](https://github.com/bignerdranch/expandable-recycler-view)
 * [zaihuishou/RcvAdapter](https://github.com/zaihuishou/RcvAdapter)
