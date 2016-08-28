@@ -130,13 +130,13 @@ public class MainActivity extends AppCompatActivity {
     private void initData() {
         mCompanylist = new ArrayList<>();
 
-        mCompanylist.add(createCompany("Google"));
+        mCompanylist.add(createCompany("Google",true));
 
-        mCompanylist.add(createCompany("Apple"));
+        mCompanylist.add(createCompany("Apple",false));
     }
 
     @NonNull
-    private Company createCompany(String companyName) {
+    private Company createCompany(String companyName,boolean isExpandDefault) {
         Company firstCompany = new Company();
         firstCompany.name = companyName;
         List<Department> departments = new ArrayList<>();
@@ -155,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
             departments.add(department);
         }
         firstCompany.mDepartments = departments;
+        firstCompany.mExpanded = isExpandDefault;
         return firstCompany;
     }
 
