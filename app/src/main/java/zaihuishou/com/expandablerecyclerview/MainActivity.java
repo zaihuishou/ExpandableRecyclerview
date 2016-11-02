@@ -1,5 +1,8 @@
 package zaihuishou.com.expandablerecyclerview;
 
+import com.zaihuishou.expandablerecycleradapter.adapter.BaseExpandableAdapter;
+import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractAdapterItem;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,9 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.zaihuishou.expandablerecycleradapter.adapter.BaseExpandableAdapter;
-import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractAdapterItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,12 +140,12 @@ public class MainActivity extends AppCompatActivity {
         Company firstCompany = new Company();
         firstCompany.name = companyName;
         List<Department> departments = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 10; i++) {
             Department department = new Department();
             department.name = "Department:" + i;
             if (i == 0) {
                 List<Employee> employeeList = new ArrayList<>();
-                for (int j = 0; j < 2; j++) {
+                for (int j = 0; j < 10; j++) {
                     Employee employee = new Employee();
                     employee.name = "Employee:" + j;
                     employeeList.add(employee);

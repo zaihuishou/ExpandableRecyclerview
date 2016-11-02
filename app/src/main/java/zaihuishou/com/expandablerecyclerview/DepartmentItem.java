@@ -1,12 +1,12 @@
 package zaihuishou.com.expandablerecyclerview;
 
+import com.zaihuishou.expandablerecycleradapter.model.ExpandableListItem;
+import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractExpandableAdapterItem;
+
 import android.animation.ObjectAnimator;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.zaihuishou.expandablerecycleradapter.model.ExpandableListItem;
-import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractExpandableAdapterItem;
 
 import java.util.List;
 
@@ -26,7 +26,6 @@ public class DepartmentItem extends AbstractExpandableAdapterItem implements Vie
         mName = (TextView) root.findViewById(R.id.tv_name);
         mArrow = (ImageView) root.findViewById(R.id.iv_arrow);
         mExpand = (TextView) root.findViewById(R.id.tv_expand);
-        mExpand.setText("expand");
         mExpand.setOnClickListener(this);
     }
 
@@ -60,8 +59,10 @@ public class DepartmentItem extends AbstractExpandableAdapterItem implements Vie
         mName.setText(department.name);
         ExpandableListItem parentListItem = (ExpandableListItem) model;
         List<?> childItemList = parentListItem.getChildItemList();
-        if (childItemList != null && !childItemList.isEmpty())
+        if (childItemList != null && !childItemList.isEmpty()) {
             mArrow.setVisibility(View.VISIBLE);
+            mExpand.setText(parentListItem.isExpanded() ? "unexpand" : "expand");
+        } else mExpand.setText("expand");
     }
 
     @Override
