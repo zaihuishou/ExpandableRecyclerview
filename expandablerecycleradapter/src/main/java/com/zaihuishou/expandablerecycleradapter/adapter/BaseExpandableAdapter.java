@@ -1,6 +1,7 @@
 package com.zaihuishou.expandablerecycleradapter.adapter;
 
 import android.support.annotation.NonNull;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -11,6 +12,7 @@ import com.zaihuishou.expandablerecycleradapter.viewholder.AdapterItemUtil;
 import com.zaihuishou.expandablerecycleradapter.viewholder.BaseAdapterItem;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -38,7 +40,37 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
     protected BaseExpandableAdapter(List data) {
         if (data == null) return;
         this.mDataList = data;
+        checkDefaultExpand();
         mRecyclerViewList = new ArrayList<>();
+    }
+
+    /**
+     * check has item is expanded by default
+     */
+    private void checkDefaultExpand() {
+        ArrayMap<Object, List<?>> childArrayMap = new ArrayMap<>();
+        Iterator<Object> iterator = mDataList.iterator();
+        while (iterator.hasNext()) {
+            Object next = iterator.next();
+            if (next instanceof ExpandableListItem) {
+                ExpandableListItem expandableListItem = (ExpandableListItem) next;
+                if (expandableListItem.isExpanded()) {
+                    List<?> childItemList = expandableListItem.getChildItemList();
+                    if (childItemList != null && !childItemList.isEmpty()) {
+                        childArrayMap.put(next, childItemList);
+                    }
+                }
+            }
+        }
+        int size = childArrayMap.size();
+        if (size == 0) return;
+        for (int i = 0; i < size; i++) {
+            Object o = childArrayMap.keyAt(i);
+            List<?> objects = childArrayMap.valueAt(i);
+            int indexOf = mDataList.indexOf(o);
+            mDataList.addAll(indexOf + 1, objects);
+        }
+
     }
 
     @Override
@@ -61,6 +93,7 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
     public void updateData(@NonNull List<Object> data) {
         if (data != null && !data.isEmpty()) {
             mDataList = data;
+            checkDefaultExpand();
             notifyDataSetChanged();
         }
     }
