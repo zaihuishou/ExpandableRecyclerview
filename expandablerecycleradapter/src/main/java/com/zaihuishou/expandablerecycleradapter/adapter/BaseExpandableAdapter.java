@@ -298,7 +298,7 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
     }
 
     /**
-     * expand index item
+     * expand index item (Notice: only fixed to just adjust triple level, not available for higher level!!!!!!!)
      *
      * @param expandableListItem
      * @param parentIndex                       The index of the parent to collapse
@@ -313,6 +313,14 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
                 for (int i = 0; i < childListItemCount; i++) {
                     Object o = childItemList.get(i);
                     int newIndex = parentIndex + i + 1;
+                    if (isExpandAllChildren && i > 0) {
+                        for(int j = 0; j < i; j++){
+                            Object childBefore = childItemList.get(j);
+                            if(childBefore instanceof ExpandableListItem){
+                                newIndex += ((ExpandableListItem) childBefore).getChildItemList().size();
+                            }
+                        }
+                    }
                     mDataList.add(newIndex, o);
                     notifyItemInserted(newIndex);
                     if (isExpandAllChildren)
