@@ -1,5 +1,6 @@
 package com.zaihuishou.expandablerecycleradapter.adapter;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,8 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
 
     private List<RecyclerView> mRecyclerViewList;
 
+    private Handler mHandler;
+
     public void setExpandCollapseListener(ExpandCollapseListener expandCollapseListener) {
         mExpandCollapseListener = expandCollapseListener;
     }
@@ -42,6 +45,7 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
         this.mDataList = data;
         checkDefaultExpand();
         mRecyclerViewList = new ArrayList<>();
+        mHandler = new Handler();
     }
 
     /**
@@ -228,6 +232,28 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
                 int expandedCountBeforePosition = getExpandedItemCount(parentIndex);
                 mExpandCollapseListener.onListItemCollapsed(parentIndex - expandedCountBeforePosition);
             }
+
+            // Bug explain:
+            // Here is a bug that if we want to show lots of item with
+            // triple level like demo shows [Google, Apple, Alibaba, Tencent]
+            // and so on and each of them contains 10 department and each department
+            // contains 10 employee, when we click the first top level like  Google and
+            // expand the [Department0] of Google, then
+            // collapse the Google and click Apple or Alibaba, it will not
+            // expand. I found the reason is that Apple's or Alibaba's index
+            // is not change after Google collapsed because the BaseExpandableAdapter
+            // not call onBindViewHolder().
+            // Solution (Simple solution, it's a temporary method i think):
+            // The purpose is to show the RecyclerView's range animation,
+            // and solve the bug that some item at the bottom of RecyclerView
+            // not call function onBindViewHolder() after collapsed. So i add
+            // this code notifyDataSetChanged() to update holder.
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    notifyDataSetChanged();
+                }
+            }, 300);
         }
     }
 
@@ -314,8 +340,9 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
                     Object o = childItemList.get(i);
                     int newIndex = parentIndex + i + 1;
                     if (isExpandAllChildren && i > 0) {
+                        Object childBefore;
                         for(int j = 0; j < i; j++){
-                            Object childBefore = childItemList.get(j);
+                            childBefore = childItemList.get(j);
                             if(childBefore instanceof ExpandableListItem){
                                 newIndex += ((ExpandableListItem) childBefore).getChildItemList().size();
                             }
