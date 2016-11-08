@@ -1,15 +1,15 @@
 package com.zaihuishou.expandablerecycleradapter.adapter;
 
-import android.support.annotation.NonNull;
-import android.support.v4.util.ArrayMap;
-import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
-
 import com.zaihuishou.expandablerecycleradapter.model.ExpandableListItem;
 import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractAdapterItem;
 import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractExpandableAdapterItem;
 import com.zaihuishou.expandablerecycleradapter.viewholder.AdapterItemUtil;
 import com.zaihuishou.expandablerecycleradapter.viewholder.BaseAdapterItem;
+
+import android.support.annotation.NonNull;
+import android.support.v4.util.ArrayMap;
+import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -157,8 +157,27 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
      */
     public void removedItem(int position) {
         if (isDataListNotEmpty() && position < mDataList.size() && position >= 0) {
+
+            Object o = mDataList.get(position);
+            for (int i = position - 1; i >= 0; i--) {
+                Object o1 = mDataList.get(i);
+                if (o1 instanceof ExpandableListItem) {
+                    List<?> childItemList = ((ExpandableListItem) o1).getChildItemList();
+                    final int size = childItemList.size();
+                    for (int j = 0; j < size; j++) {
+                        Object o2 = childItemList.get(j);
+                        if (o == o2) {
+                            childItemList.remove(j);
+                            break;
+                        }
+                    }
+                }
+            }
             mDataList.remove(position);
             notifyItemRemoved(position);
+            if (position != mDataList.size()) {
+                notifyItemRangeChanged(position - 1, mDataList.size() - 1);
+            }
         }
 
     }
@@ -193,9 +212,8 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
     }
 
     /**
-     * @param expandableListItem               {@link ExpandableListItem}
-     * @param parentIndex                      item index
-     * @param collapseTriggeredByListItemClick
+     * @param expandableListItem {@link ExpandableListItem}
+     * @param parentIndex        item index
      */
     private void collapseParentListItem(ExpandableListItem expandableListItem, int parentIndex, boolean collapseTriggeredByListItemClick) {
         if (expandableListItem.isExpanded()) {
@@ -233,9 +251,6 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
 
     /**
      * notify item state changed
-     *
-     * @param parentIndex
-     * @param isExpand
      */
     private void notifyItemExpandedOrCollapsed(int parentIndex, boolean isExpand) {
         if (mRecyclerViewList != null && !mRecyclerViewList.isEmpty()) {
@@ -274,7 +289,6 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
     }
 
     /**
-     * @param isExpanded
      * @return return all parents
      */
     @NonNull
@@ -300,9 +314,7 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
     /**
      * expand index item
      *
-     * @param expandableListItem
-     * @param parentIndex                       The index of the parent to collapse
-     * @param expansionTriggeredByListItemClick
+     * @param parentIndex The index of the parent to collapse
      */
     protected void expandParentListItem(ExpandableListItem expandableListItem, int parentIndex, boolean expansionTriggeredByListItemClick, boolean isExpandAllChildren) {
         if (!expandableListItem.isExpanded()) {
