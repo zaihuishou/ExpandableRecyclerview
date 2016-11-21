@@ -9,7 +9,7 @@ An ExpandableRecycleradapter with Recyclerview
 
 ##Gradle
  ```
- compile 'com.zaihuishou:expandablerecycleradapter:1.0.2'
+ compile 'com.zaihuishou:expandablerecycleradapter:1.0.3'
  ```
  
 ##Maven
