@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 ext {
     PUBLISH_GROUP_ID = 'com.zaihuishou'
     PUBLISH_ARTIFACT_ID = 'expandablerecycleradapter'
-    PUBLISH_VERSION = '1.0.2'
+    PUBLISH_VERSION = '1.0.3'
 }
 
 android {
@@ -14,7 +14,7 @@ android {
         minSdkVersion 8
         targetSdkVersion 24
         versionCode 1
-        versionName "1.0.2"
+        versionName "1.0.3"
 
     }
     buildTypes {
@@ -34,4 +34,4 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:recyclerview-v7:24.1.1'
 }
-//apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
+apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'

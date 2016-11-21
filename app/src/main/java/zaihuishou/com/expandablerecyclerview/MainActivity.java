@@ -1,8 +1,5 @@
 package zaihuishou.com.expandablerecyclerview;
 
-import com.zaihuishou.expandablerecycleradapter.adapter.BaseExpandableAdapter;
-import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractAdapterItem;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.zaihuishou.expandablerecycleradapter.adapter.BaseExpandableAdapter;
+import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractAdapterItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,13 +130,13 @@ public class MainActivity extends AppCompatActivity {
     private void initData() {
         mCompanylist = new ArrayList<>();
 
-        mCompanylist.add(createCompany("Google",true));
+        mCompanylist.add(createCompany("Google", true));
 
-        mCompanylist.add(createCompany("Apple",false));
+        mCompanylist.add(createCompany("Apple", false));
     }
 
     @NonNull
-    private Company createCompany(String companyName,boolean isExpandDefault) {
+    private Company createCompany(String companyName, boolean isExpandDefault) {
         Company firstCompany = new Company();
         firstCompany.name = companyName;
         List<Department> departments = new ArrayList<>();
@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
             Department department = new Department();
             department.name = "Department:" + i;
             if (i == 0) {
+                department.setExpanded(true);
                 List<Employee> employeeList = new ArrayList<>();
                 for (int j = 0; j < 10; j++) {
                     Employee employee = new Employee();

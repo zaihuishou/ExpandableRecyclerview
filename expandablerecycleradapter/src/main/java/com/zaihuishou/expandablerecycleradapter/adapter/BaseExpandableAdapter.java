@@ -297,8 +297,49 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
         return expandableListItems;
     }
 
+//    /**
+//     * expand index item
+//     *
+//     * @param expandableListItem
+//     * @param parentIndex                       The index of the parent to collapse
+//     * @param expansionTriggeredByListItemClick
+//     */
+//    protected void expandParentListItem(ExpandableListItem expandableListItem, int parentIndex, boolean expansionTriggeredByListItemClick, boolean isExpandAllChildren) {
+//        if (!expandableListItem.isExpanded()) {
+//            List<?> childItemList = expandableListItem.getChildItemList();
+//            if (childItemList != null && !childItemList.isEmpty()) {
+//                expandableListItem.setExpanded(true);
+//                int childListItemCount = childItemList.size();
+//                for (int i = 0; i < childListItemCount; i++) {
+//                    Object o = childItemList.get(i);
+//                    int newIndex = parentIndex + i + 1;
+//                    mDataList.add(newIndex, o);
+//                    notifyItemInserted(newIndex);
+//                    if (isExpandAllChildren)
+//                        if (o instanceof ExpandableListItem) {
+////                            notifyItemInserted(newIndex);
+////                            if (parentIndex != mDataList.size() - 1)
+////                                notifyItemRangeChanged(parentIndex + 1, mDataList.size() - parentIndex - 1);
+//                            expandParentListItem((ExpandableListItem) o, newIndex, expansionTriggeredByListItemClick, isExpandAllChildren);
+//                        }
+//                }
+////                notifyItemRangeInserted(parentIndex + 1, childListItemCount);
+//                int positionStart = parentIndex + childListItemCount;
+//                if (parentIndex != mDataList.size() - 1)
+//                    notifyItemRangeChanged(positionStart, mDataList.size() - positionStart);
+//
+////                notifyItemExpandedOrCollapsed(parentIndex, true);
+//            }
+//            if (expansionTriggeredByListItemClick && mExpandCollapseListener != null) {
+//                int expandedCountBeforePosition = getExpandedItemCount(parentIndex);
+//                mExpandCollapseListener.onListItemExpanded(parentIndex - expandedCountBeforePosition);
+//            }
+//        }
+//    }
+
+
     /**
-     * expand index item
+     * expand index item (Fixed by Jason. now it just adjust triple level, no more level!!!!!!!)
      *
      * @param expandableListItem
      * @param parentIndex                       The index of the parent to collapse
@@ -313,22 +354,30 @@ public abstract class BaseExpandableAdapter extends RecyclerView.Adapter impleme
                 for (int i = 0; i < childListItemCount; i++) {
                     Object o = childItemList.get(i);
                     int newIndex = parentIndex + i + 1;
+                    if (isExpandAllChildren && i > 0) {
+                        for (int j = 0; j < i; j++) {
+                            Object childBefore = childItemList.get(j);
+                            if (childBefore instanceof ExpandableListItem) {
+                                newIndex += ((ExpandableListItem) childBefore).getChildItemList().size();
+                            }
+                        }
+                    }
                     mDataList.add(newIndex, o);
                     notifyItemInserted(newIndex);
                     if (isExpandAllChildren)
                         if (o instanceof ExpandableListItem) {
-//                            notifyItemInserted(newIndex);
-//                            if (parentIndex != mDataList.size() - 1)
-//                                notifyItemRangeChanged(parentIndex + 1, mDataList.size() - parentIndex - 1);
+                            // notifyItemInserted(newIndex);
+                            // if (parentIndex != mDataList.size() - 1)
+                            // notifyItemRangeChanged(parentIndex + 1, mDataList.size() - parentIndex - 1);
                             expandParentListItem((ExpandableListItem) o, newIndex, expansionTriggeredByListItemClick, isExpandAllChildren);
                         }
                 }
-//                notifyItemRangeInserted(parentIndex + 1, childListItemCount);
+                // notifyItemRangeInserted(parentIndex + 1, childListItemCount);
                 int positionStart = parentIndex + childListItemCount;
                 if (parentIndex != mDataList.size() - 1)
                     notifyItemRangeChanged(positionStart, mDataList.size() - positionStart);
 
-//                notifyItemExpandedOrCollapsed(parentIndex, true);
+                // notifyItemExpandedOrCollapsed(parentIndex, true);
             }
             if (expansionTriggeredByListItemClick && mExpandCollapseListener != null) {
                 int expandedCountBeforePosition = getExpandedItemCount(parentIndex);
