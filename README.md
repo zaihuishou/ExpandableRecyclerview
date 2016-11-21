@@ -18,7 +18,7 @@ An ExpandableRecycleradapter with Recyclerview
  <dependency>
    <groupId>com.zaihuishou</groupId>
    <artifactId>expandablerecycleradapter</artifactId>
-   <version>1.0.0</version>
+   <version>1.0.3</version>
    <type>pom</type>
  </dependency>
  ```
